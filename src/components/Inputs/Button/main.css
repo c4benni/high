@@ -1,0 +1,57 @@
+.underline-effect {
+  @apply after:w-full after:absolute after:h-[1px] after:bg-primary-700 dark:after:bg-primary-500 after:opacity-0 after:bottom-0 after:translate-x-[-100%] hover:after:translate-x-0 hover:after:opacity-70 after:transform-gpu after:transition-all;
+}
+.Button {
+  @apply inline-grid grid-flow-col gap-x-2 relative overflow-hidden isolate items-center justify-center cursor-pointer transform-gpu active:opacity-90 active:scale-[0.975] sm:active:scale-[0.9925];
+  transition: 0.35s ease;
+  transition-property: opacity, transform;
+}
+
+.Button:hover{
+  will-change: opacity, transform;
+}
+
+.Button.link {
+  @apply opacity-90 hover:opacity-80 focus:opacity-[.85] active:opacity-70
+  text-[0.85em] lg:text-[0.9em] mx-2;
+  min-width: fit-content;
+}
+
+.filled {
+@apply outline-none ring-offset-white dark:ring-offset-black
+ring-offset-1 ring-primary-900 dark:ring-primary-700 font-semibold;
+  width: fit-content;
+}
+
+.filled:not(.no-bg){
+  @apply focus-visible:ring-[2px];
+}
+
+.filled.no-bg:not(.hide-plain-focus){
+  @apply focus:ring-[2px];
+}
+
+.Button.sm {
+  @apply px-3 h-[34px] text-[0.825rem] rounded-sm;
+}
+
+.Button.md {
+  @apply px-6 h-[44px] text-base rounded-md;
+}
+
+.Button.lg {
+  @apply px-9 h-[56px] text-lg rounded-lg;
+}
+
+.Button.icon {
+  @apply px-0 h-[38px] w-[38px] text-base rounded-full;
+}
+
+.Button.primary {
+  @apply bg-primary-700 text-white dark:bg-primary-500 dark:text-black 
+  hover:bg-primary-800 active:bg-primary-900 dark:hover:bg-primary-600 dark:active:bg-primary-700;
+}
+
+.Button.primary-text{
+  @apply text-primary-700 dark:text-primary-400;
+}
