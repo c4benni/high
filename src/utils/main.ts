@@ -7,7 +7,7 @@ export const mediaListener = ({
 }: {
   media: MediaQueryList;
   callback: MediaQueryListEvent | any;
-  event: string;
+  event?: string;
 }): void => {
   try {
     media.addEventListener(event, callback);
@@ -71,7 +71,7 @@ export function Copy({
   });
 }
 
-export const nextAnimFrame = (callback: Function): Promise<void> => {
+export const nextAnimFrame = (callback?: Function): Promise<void> => {
   return new Promise((r) =>
     requestAnimationFrame(() => {
       r();
