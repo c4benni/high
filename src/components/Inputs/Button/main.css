@@ -1,33 +1,58 @@
-.underline-effect {
-  @apply after:w-full after:absolute after:h-[1px] after:bg-primary-700 dark:after:bg-primary-500 after:opacity-0 after:bottom-0 after:translate-x-[-100%] hover:after:translate-x-0 hover:after:opacity-70 after:transform-gpu after:transition-all;
-}
-.Button {
-  @apply inline-grid grid-flow-col gap-x-2 relative overflow-hidden isolate items-center justify-center cursor-pointer transform-gpu active:opacity-90 active:scale-[0.975] sm:active:scale-[0.9925];
-  transition: 0.35s ease;
-  transition-property: opacity, transform;
+
+@media (pointer: fine) and (hover: hover){
+  .Button:hover{
+    will-change: opacity, transform;
+  }
+
+  .Button{
+    @apply hover:before:opacity-5;
+  }
+
+  .Button.primary{
+    @apply hover:bg-primary-800 dark:hover:bg-primary-600
+  }
+
+  .Button.link{
+    @apply hover:opacity-80
+  }
+
+  .Button.underline-effect{
+    @apply hover:after:translate-x-0 hover:after:opacity-70 
+  }
 }
 
-.Button:hover{
-  will-change: opacity, transform;
+.Button.underline-effect {
+  @apply after:w-full after:absolute after:h-[1px] after:bg-primary-700 dark:after:bg-primary-500 after:opacity-0 after:bottom-0 after:translate-x-[-100%] after:transform-gpu after:transition-all;
+}
+.Button {
+  @apply inline-grid grid-flow-col gap-x-2 relative overflow-hidden isolate items-center justify-center cursor-pointer transform-gpu active:scale-[0.975] sm:active:scale-[0.9925] before:-z-[1] before:transition-opacity before:opacity-0 active:before:opacity-10;
+  transition: 0.35s ease;
+  transition-property: opacity, transform;
+  --pseudo-bg: currentColor;
+  word-spacing: 2px;
 }
 
 .Button.link {
-  @apply opacity-90 hover:opacity-80 focus:opacity-[.85] active:opacity-70
+  @apply opacity-90 focus:opacity-[.85] active:opacity-70
   text-[0.85em] lg:text-[0.9em] mx-2;
   min-width: fit-content;
 }
 
-.filled {
+.Button:not(.link){
+  @apply font-medium;
+}
+
+.Button.filled {
 @apply outline-none ring-offset-white dark:ring-offset-black
-ring-offset-1 ring-primary-900 dark:ring-primary-700 font-semibold;
+ring-offset-1 ring-primary-900 dark:ring-primary-700;
   width: fit-content;
 }
 
-.filled:not(.no-bg){
+.Button.filled:not(.no-bg){
   @apply focus-visible:ring-[2px];
 }
 
-.filled.no-bg:not(.hide-plain-focus){
+.Button.filled.no-bg:not(.hide-plain-focus){
   @apply focus:ring-[2px];
 }
 
@@ -49,7 +74,7 @@ ring-offset-1 ring-primary-900 dark:ring-primary-700 font-semibold;
 
 .Button.primary {
   @apply bg-primary-700 text-white dark:bg-primary-500 dark:text-black 
-  hover:bg-primary-800 active:bg-primary-900 dark:hover:bg-primary-600 dark:active:bg-primary-700;
+  active:bg-primary-900 dark:active:bg-primary-700;
 }
 
 .Button.primary-text{
