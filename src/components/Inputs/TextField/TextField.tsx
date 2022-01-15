@@ -1,38 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
+
+import './main.css'
+
+export type InputValue = string | number
 
 type PropType = {
-    label: string,
-    type?: string
+    label: string;
+    type?: string;
+    placeholder?: string;
+    model?: InputValue;
 }
 
 let instances = 0;
-
-const classes = {
-    root: 'inline-grid gap-y-1',
-    label: 'text-gray-800 dark:text-gray-200',
-    input: 'h-[38px] rounded-md border border-gray-300 dark:border-gray-700 border-opacity-70 outline-none ring-offset-2 ring-primary-700 dark:ring-primary-500 focus:ring-[2px] px-2',
-}
 
 function TextField(props: PropType) {
 
     const [id, setId] = useState('')
 
+    const [value, setValue] = useState<InputValue>()
+
     useEffect(() => {
         instances++;
 
         setId(`input-${instances}`)
-    }, [])
+
+        if (/string|boolean|number/.test(typeof props.model)) {
+            // @ts-ignore;
+            setValue(props.model);
+        }
+    }, [props])
+
+    const onInput = (e: FormEvent) => {
+        // setValue(e.target.value)
+    }
 
     return (
-        <div className={classes.root}>
-            <label htmlFor={id} className={classes.label}>
+        <div className="inline-grid gap-y-1">
+            <label htmlFor={id} className="text-gray-800 dark:text-gray-200">
                 {props.label}
             </label>
 
             <input
                 type={props.type}
+                placeholder={props.placeholder}
+                value={value}
                 id={id}
-                className={classes.input}
+                onInput={onInput}
+                className="TextField"
             />
         </div>
     );
