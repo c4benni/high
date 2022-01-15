@@ -1,13 +1,18 @@
 import { mediaListener } from "./main";
 
-type BreakpointConfig = {
+export type BreakpointConfig = {
   [key: string]: string;
 };
 
-type BreakpointArg = {
+export type BreakpointArg = {
   config: BreakpointConfig;
-  useOrientation: boolean;
-  onChange: Function;
+  useOrientation?: boolean;
+  onChange?: Function;
+};
+
+export type BreakpointOutput = {
+  is?: string;
+  orientation?: string;
 };
 
 const setParseBreakpoints = (
@@ -60,7 +65,7 @@ function updateBreakpointMediaListener(
     name: string;
     index: number;
     matches: boolean;
-    onChange: Function;
+    onChange?: Function;
   }
 ) {
   const name = e.name;
@@ -84,7 +89,7 @@ function updateBreakpointMediaListener(
   }
 }
 
-function mounted(this: BreakpointWrapper, onChange: Function) {
+function mounted(this: BreakpointWrapper, onChange?: Function) {
   if (!installed) {
     parsedBreakpoints.forEach((br, index) => {
       const brNameWrap = /^<.+>/g;
@@ -103,18 +108,19 @@ function mounted(this: BreakpointWrapper, onChange: Function) {
         media: mediaQuery,
         event: "change",
         callback: (e: MediaQueryListEvent) => {
-          updateBreakpointMediaListener.call(this, {
-            matches: e.matches,
-            index,
-            name,
-            onChange,
+          requestAnimationFrame(() => {
+            updateBreakpointMediaListener.call(this, {
+              matches: e.matches,
+              index,
+              name,
+              onChange,
+            });
           });
         },
       });
     });
   }
 }
-
 class BreakpointWrapper {
   constructor(arg: BreakpointArg) {
     const { config, useOrientation, onChange } = arg;
@@ -125,7 +131,7 @@ class BreakpointWrapper {
     } else if (Object.keys(config).length < 2) {
       throw new SyntaxError("Config object must have at least 2 breakpoints");
     } else if (!installed) {
-      parsedBreakpoints = setParseBreakpoints(config, useOrientation);
+      parsedBreakpoints = setParseBreakpoints(config, useOrientation || false);
 
       mounted.call(this, onChange);
 
@@ -150,7 +156,7 @@ class BreakpointWrapper {
   }
 }
 
-export default class Breakpoint {
+export default class Breakpoint implements BreakpointOutput {
   // mimic a proxy to avoid reassigning
   constructor(arg: BreakpointArg) {
     const breakpointWrapper = new BreakpointWrapper(arg);
