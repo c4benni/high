@@ -6,3 +6,5 @@ declare namespace NodeJS {
     server: boolean;
   }
 }
+
+declare module "cloudinary-react";
