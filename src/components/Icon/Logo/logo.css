@@ -15,6 +15,6 @@
 }
 
 .AppLogo{
-    @apply text-primary-800 dark:text-primary-400
+    @apply text-secondary-800 dark:text-secondary-500
 }
 
