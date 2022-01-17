@@ -5,6 +5,10 @@ import { RootState } from "../redux/store";
 import Breakpoint, { BreakpointOutput } from "../utils/breakpoints";
 import screenSizes from "../utils/screenSizes";
 
+export interface BreakpointHook extends BreakpointOutput {
+  isMobile?: boolean;
+}
+
 export default function useBreakpoint() {
   const breakpointState = useSelector(
     (state: RootState) => state.breakpointSlice
@@ -13,7 +17,7 @@ export default function useBreakpoint() {
   const dispatch = useDispatch();
 
   const [breakpoint, changeBreakpoint] =
-    useState<BreakpointOutput>(breakpointState);
+    useState<BreakpointHook>(breakpointState);
 
   useEffect(() => {
     if (!breakpointState.is) {
@@ -33,7 +37,10 @@ export default function useBreakpoint() {
       });
     }
 
-    changeBreakpoint(breakpointState);
+    changeBreakpoint({
+      ...breakpointState,
+      isMobile: /xxs|xs|sm/.test(breakpointState.is),
+    });
   }, [dispatch, breakpointState]);
 
   return [breakpoint] as const;
