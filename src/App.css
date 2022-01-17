@@ -170,15 +170,25 @@ textarea {
 
 html {
   font-family: 'Alegreya Sans', sans-serif !important;
-
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   height: stretch;
-
   letter-spacing: 0.4px;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+body{
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
 }
 
 @keyframes fade-appear {
@@ -286,7 +296,7 @@ svg,
 }
 
 .text-title{
-  @apply text-gray-800 dark:text-gray-200
+  @apply text-gray-800 dark:text-gray-100
 }
 
 .text-caption{
