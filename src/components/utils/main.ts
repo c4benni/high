@@ -28,9 +28,8 @@ export function className(arg: ClassName): string {
   }
 
   if (isArray) {
-    const flatten = arg.flat(Infinity);
 
-    const validClassName: string[] = [];
+    const flatten = arg.flat(Infinity);
 
     flatten.forEach((item) => {
       const getClassName = className(item);
