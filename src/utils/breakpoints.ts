@@ -1,4 +1,4 @@
-import { mediaListener } from "./main";
+import { mediaListener, nextTick } from "./main";
 
 export type BreakpointConfig = {
   [key: string]: string;
@@ -12,7 +12,7 @@ export type BreakpointArg = {
 
 export type BreakpointOutput = {
   is?: string;
-  orientation?: string;
+  orientation?: "portrait" | "landscape" | "";
 };
 
 const setParseBreakpoints = (
@@ -107,7 +107,8 @@ function mounted(this: BreakpointWrapper, onChange?: Function) {
       mediaListener({
         media: mediaQuery,
         event: "change",
-        callback: (e: MediaQueryListEvent) => {
+        callback: async (e: MediaQueryListEvent) => {
+          await nextTick();
           requestAnimationFrame(() => {
             updateBreakpointMediaListener.call(this, {
               matches: e.matches,
