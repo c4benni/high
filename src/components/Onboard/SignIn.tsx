@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { capitalize } from 'lodash'
+import React, { useEffect, useState } from 'react'
 import Divider from '../Display/Divider'
 import Button from '../Inputs/Button/Button'
 import { AnonIcon } from '../Icon/Generic/Anon'
@@ -7,23 +8,42 @@ import oauth from './authOptions'
 import { AppLogo } from '../Icon/Logo/AppLogo'
 import { className } from '../utils/main'
 import useBreakpoint from '../../hooks/breakpoint'
-// import AuthBottomSheet from './AuthBottomSheet'
-import BottomSheet from '../Display/Dialog/BottomSheet'
+import AuthBottomSheet from './BottomSheet'
+import { AuthMethod } from './BottomSheet/Content'
+import { nextTick } from '../../utils/main'
+import { useNavigate } from 'react-router-dom'
 
 type Props = {
     className?: string;
 }
 
-
 function SignIn(props: Props) {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        navigate('', {
+            replace: true
+        })
+    }, [
+        navigate
+    ])
 
     const [breakpoint] = useBreakpoint();
 
-    const [dialog, $dialog] = useState(false);
+    const [bottomSheet, $bottomSheet] = useState(false);
 
+    const [authMethod, $authMethod] = useState<AuthMethod>('')
+
+    const openAuthBottomSheet = async (method: AuthMethod) => {
+        $authMethod(method);
+
+        await nextTick();
+
+        $bottomSheet(true)
+    }
 
     const buttonClass = className([
-        'justify-start gap-x-2 shadow-sm bg-white pl-[1rem] max-w-[212px] xl:max-w-[250px]',
+        'justify-start gap-x-2 shadow-sm bg-white pl-[1rem] max-w-[212px] xs:max-w-[224px] xl:max-w-[250px]',
         {
             'dark:bg-true-gray-800': !breakpoint.isMobile,
             'text-gray-800': breakpoint.isMobile
@@ -61,7 +81,7 @@ function SignIn(props: Props) {
 
                 <div className='w-full px-6 grid'>
                     <div
-                        className='inline-grid gap-y-3 justify-self-center mt-2'
+                        className='inline-grid gap-y-3 xs:gap-y-4 justify-self-center mt-2'
                     >
                         {
                             oauth.map((auth) => {
@@ -70,23 +90,28 @@ function SignIn(props: Props) {
                                     block
                                     className={buttonClass}
                                     onClick={() => {
-                                        $dialog(true);
+                                        openAuthBottomSheet(auth.title)
                                     }}
                                 >
                                     <span className='w-[24px] flex items-center justify-center'>
                                         {auth.icon}
                                     </span>
-                                    Continue with {auth.title}
+                                    Continue with {capitalize(auth.title)}
                                 </Button>
                             })
                         }
                     </div>
 
-                    <Divider text='or' className="my-8" />
+                    <Divider text='or' className="my-8 text-white" />
 
                     <Button
                         className={`${buttonClass} justify-self-center`}
                         block
+                        onClick={
+                            () => {
+                                openAuthBottomSheet('guest')
+                            }
+                        }
                     >
                         <span className='w-[24px] flex items-center justify-center'>
                             <AnonIcon />
@@ -102,16 +127,10 @@ function SignIn(props: Props) {
 
             </div>
 
-            {/* <AuthBottomSheet
-                open={dialog}
-                onClose={() => $dialog(false)}
-            /> */}
-
-            <BottomSheet
-                open={dialog}
-                onModel={(e: boolean) => {
-                    $dialog(e)
-                }}
+            <AuthBottomSheet
+                method={authMethod}
+                open={bottomSheet}
+                onModel={$bottomSheet}
             />
         </>
     )
