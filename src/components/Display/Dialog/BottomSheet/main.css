@@ -30,21 +30,9 @@
   pointer-events: auto;
   z-index: 100;
   position: fixed;
-  left: 0;
-  height: calc(100vh + 100px);
-  width: 100%;
-  border-radius: 12px 12px 0px;
+  height: var(--height);
   touch-action: none;
-  @apply bg-white dark:bg-gray-800;
   touch-action: initial;
+  @apply w-full md:w-9/12 bg-white dark:bg-gray-800 left-0 md:left-[12.5%] rounded-t-lg md:rounded-lg;
 }
 
-.BottomSheetContent > div {
-  height: 60px;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-  text-transform: capitalize;
-}
