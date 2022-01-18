@@ -302,3 +302,29 @@ svg,
 .text-caption{
   @apply text-gray-700 dark:text-gray-300 text-sm;
 }
+
+.will-change-opacity{
+  will-change: opacity;
+}
+
+.divide-border-default-color{
+  @apply border-gray-200 dark:border-gray-700;
+}
+
+.Alert{
+  @apply py-4 px-3 border rounded-md grid grid-flow-col grid-cols-[auto,1fr] gap-x-3 items-start;
+}
+
+.Alert.warn{
+  @apply border-warning-600 bg-warning-600 bg-opacity-20 text-gray-800 dark:text-gray-50
+}
+
+.Alert.warn > .IconWrapper{
+  @apply text-warning-600 dark:text-warning-400
+}
+
+.Alert > .IconWrapper{
+  align-self: flex-start;
+  font-size: 1.35rem;
+  opacity: 0.9;
+}
