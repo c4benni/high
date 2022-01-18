@@ -1,4 +1,4 @@
-type ClassName = string | object | ClassName[];
+export type ClassName = string | object | ClassName[];
 
 export function className(arg: ClassName): string {
   if (typeof arg == "string") {
@@ -28,7 +28,6 @@ export function className(arg: ClassName): string {
   }
 
   if (isArray) {
-
     const flatten = arg.flat(Infinity);
 
     flatten.forEach((item) => {
