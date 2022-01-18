@@ -1,4 +1,5 @@
 import React, { FormEvent, useEffect, useState } from 'react';
+import { ClassName, className } from '../../utils/main';
 
 import './main.css'
 
@@ -9,6 +10,7 @@ type PropType = {
     type?: string;
     placeholder?: string;
     model?: InputValue;
+    className?: ClassName
 }
 
 let instances = 0;
@@ -35,8 +37,13 @@ function TextField(props: PropType) {
     }
 
     return (
-        <div className="inline-grid gap-y-1">
-            <label htmlFor={id} className="text-gray-800 dark:text-gray-200">
+        <div className={
+            className([
+                "inline-grid gap-y-1",
+                props.className || ''
+            ])
+        }>
+            <label htmlFor={id} className="text-sm xl:text-base text-gray-800 dark:text-gray-200">
                 {props.label}
             </label>
 
