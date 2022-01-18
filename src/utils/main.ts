@@ -86,7 +86,7 @@ export const nextTick = async () =>
 export function hackTabKey(
   e: KeyboardEvent,
   cb = (e?: KeyboardEvent, key?: string) => {},
-  evtKey: string
+  evtKey?: string
 ) {
   const key = evtKey || eventKey(e);
 
@@ -108,6 +108,8 @@ export function vibrate(d = 1) {
       navigator.mozVibrate(d)
     : navigator?.vibrate?.(d);
 }
+
+export const isHTML = (x: any) => x instanceof HTMLElement;
 
 export function isIOS() {
   return (
