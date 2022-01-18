@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
 
 export type BreakpointSlice = {
   is: string;
-  orientation: string;
+  orientation: "portrait" | "landscape" | "";
 };
 
 const initialState: BreakpointSlice = {
