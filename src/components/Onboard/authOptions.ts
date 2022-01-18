@@ -1,29 +1,30 @@
-import { LogoApple } from "../Icon/Logo/Apple";
+import { EmailIcon } from "../Icon/Generic/Email";
 import { LogoGithub } from "../Icon/Logo/Github";
 import { LogoGoogle } from "../Icon/Logo/Google";
 import { LogoTwitter } from "../Icon/Logo/Twitter";
+import { AuthMethod } from "./BottomSheet/Content";
 
 type AuthOption = {
-  title: string;
+  title: AuthMethod;
   icon: JSX.Element;
 };
 
 const oauth: AuthOption[] = [
   {
-    title: "Apple",
-    icon: LogoApple({}),
-  },
-  {
-    title: "Google",
+    title: "google",
     icon: LogoGoogle({}),
   },
   {
-    title: "Twitter",
+    title: "twitter",
     icon: LogoTwitter({}),
   },
   {
-    title: "Github",
+    title: "github",
     icon: LogoGithub({}),
+  },
+  {
+    title: "email",
+    icon: EmailIcon({}),
   },
 ];
 
