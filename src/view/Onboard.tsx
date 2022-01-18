@@ -31,7 +31,8 @@ function Onboard() {
             }>
                 <Img
                     alt='splash image'
-                    publicId="highChat/splash/daniel-korpai-r73OFSry5AI-unsplash"
+                    // publicId="highChat/splash/daniel-korpai-r73OFSry5AI-unsplash"
+                    publicId='highChat/splash/jen-p-FoG8lotg7AA-unsplash_bff4c7.jpg'
                     className='h-full object-cover object-top w-full'
                 />
             </div>
