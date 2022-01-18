@@ -4,7 +4,7 @@
     will-change: opacity, transform;
   }
 
-  .Button{
+  .Button.filled{
     @apply hover:before:opacity-5;
   }
 
@@ -25,17 +25,44 @@
   @apply after:w-full after:absolute after:h-[1px] after:bg-primary-700 dark:after:bg-primary-500 after:opacity-0 after:bottom-0 after:translate-x-[-100%] after:transform-gpu after:transition-all;
 }
 .Button {
-  @apply inline-grid grid-flow-col gap-x-2 relative overflow-hidden isolate items-center justify-center cursor-pointer transform-gpu active:scale-[0.975] sm:active:scale-[0.9925] before:-z-[1] before:transition-opacity before:opacity-0 active:before:opacity-10;
+  @apply inline-grid grid-flow-col gap-x-2 relative overflow-hidden isolate items-center justify-center cursor-pointer transform-gpu active:scale-[0.975] sm:active:scale-[0.9925];
   transition: 0.35s ease;
   transition-property: opacity, transform;
   --pseudo-bg: currentColor;
   word-spacing: 2px;
 }
 
+.Button.filled{
+  @apply before:-z-[1] before:transition-opacity before:opacity-0 active:before:opacity-10;
+}
+
+.Button.active-scale-x{
+  @apply active:scale-x-[0.975] sm:active:scale-x-[0.9925]
+}
+
+.Button.active-scale-y{
+  @apply active:scale-y-[0.975] sm:active:scale-y-[0.9925]
+}
+
+
+.Button.sm {
+  @apply px-3 h-[34px] text-[0.825rem] rounded-sm;
+}
+
+.Button.md {
+  @apply px-6 h-[44px] text-base xs:text-[1.03rem] md:text-[1.075rem] rounded-md;
+}
+
+.Button.lg {
+  @apply px-9 h-[56px] text-lg rounded-lg;
+}
+
+
 .Button.link {
-  @apply opacity-90 focus:opacity-[.85] active:opacity-70
-  text-[0.85em] lg:text-[0.9em] mx-2;
+  @apply focus:opacity-[.85] active:opacity-70
+  lg:text-[0.975em] mx-2 p-0;
   min-width: fit-content;
+  height: fit-content;
 }
 
 .Button:not(.link){
@@ -54,18 +81,6 @@ ring-offset-1 ring-primary-900 dark:ring-primary-700;
 
 .Button.filled.no-bg:not(.hide-plain-focus){
   @apply focus:ring-[2px];
-}
-
-.Button.sm {
-  @apply px-3 h-[34px] text-[0.825rem] rounded-sm;
-}
-
-.Button.md {
-  @apply px-6 h-[44px] text-base rounded-md;
-}
-
-.Button.lg {
-  @apply px-9 h-[56px] text-lg rounded-lg;
 }
 
 .Button.icon {
