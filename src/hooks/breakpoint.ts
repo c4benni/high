@@ -34,6 +34,7 @@ export default function useBreakpoint() {
 
       updateBreakpoint({
         is: breakpoint.is,
+        orientation: breakpoint.orientation,
       });
     }
 
@@ -41,6 +42,7 @@ export default function useBreakpoint() {
       ...breakpointState,
       isMobile: /xxs|xs|sm/.test(breakpointState.is),
     });
+
   }, [dispatch, breakpointState]);
 
   return [breakpoint] as const;
