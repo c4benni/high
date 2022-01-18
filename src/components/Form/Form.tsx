@@ -1,5 +1,6 @@
 import React, { FormEvent, ReactNode } from 'react';
 import Button from '../Inputs/Button/Button';
+import { className } from '../utils/main';
 import './main.css'
 
 type SubmitButton = {
@@ -8,9 +9,10 @@ type SubmitButton = {
 }
 
 interface FormProps extends SubmitButton {
-    name: string,
-    children: ReactNode,
-    action?: string
+    name: string;
+    children: ReactNode;
+    action?: string;
+    className?: string
 }
 
 function Submit(props: SubmitButton) {
@@ -40,7 +42,12 @@ function Form(props: FormProps) {
         <form
             action={props.action}
             onSubmit={submit}
-            className='Form'
+            className={
+                className([
+                    'Form',
+                    props.className || ''
+                ])
+            }
         >
 
             {props.children}
