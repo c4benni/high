@@ -70,6 +70,26 @@
   height: fit-content;
 }
 
+.Button.link.link-arrow.arrow-right{
+  @apply pr-1;
+}
+
+.Button.link.link-arrow.arrow-left{
+  @apply pl-1;
+}
+
+.Button.link-arrow .IconWrapper{
+  @apply transition-transform transform-gpu;
+}
+
+.Button.link-arrow.arrow-right:hover .IconWrapper{
+  @apply translate-x-1
+}
+
+.Button.link-arrow.arrow-left:hover .IconWrapper{
+  @apply -translate-x-1
+}
+
 .Button:not(.link){
   @apply font-medium;
 }

@@ -1,13 +1,16 @@
-import React, { ReactNode } from 'react';
+import React, { Fragment } from 'react';
 import AppLoader from '../../Display/Loader';
 import { ClassName, className } from '../../utils/main';
+import { Slot } from '../../utils/types';
 import './main.css'
 
 
 type ButtonProps = {
     type?: string;
     tag?: string;
-    children?: ReactNode;
+    children?: Slot;
+    append?: Slot;
+    prepend?: Slot;
     title?: string;
     link?: boolean;
     block?: boolean;
@@ -40,17 +43,6 @@ function Button(props: ButtonProps) {
             tabIndex:
                 props.disabled ? '-1' : !/button|a/.test(tag) ? '0' : undefined,
             disabled: props.disabled,
-            // className: [
-            //     'Button fill-before',
-            //     props.size,
-            //     props.link ? `link underline-effect${props.primary ? ' primary-text' : ''}` : '',
-            //     props.primary && !props.link ? 'primary' : '',
-            //     props.overlay ? 'border-[0.75px] border-white border-opacity-10 bg-white bg-opacity-10 hover:bg-opacity-20' : '',
-            //     props.hidePlainFocus ? 'hide-plain-focus' : '',
-            //     !props.link && (props.primary || props.secondary) ? 'filled' : 'no-bg',
-            //     props.block ? 'grid w-full' : '',
-            //     props.className
-            // ].filter(Boolean).join(' '),
             className: className(
                 [
                     'Button',
@@ -80,13 +72,30 @@ function Button(props: ButtonProps) {
                 ]
             )
         }, [
-            props.loading ? (
-                <AppLoader
-                    key={'loader'}
-                    className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
-                />
-            ) :
-                (props.children || props.title)
+            <Fragment
+                key={'children-frag'}
+            >
+                {
+                    (props.children || [
+                        <Fragment
+                            key={'inner-frag'}
+                        >
+                            {props.prepend}
+                            {props.title}
+                            {props.append}
+                        </Fragment>
+                    ])
+                }
+                {
+
+                    props.loading ? (
+                        <AppLoader
+                            key={'loader'}
+                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
+                        />
+                    ) : null
+                }
+            </Fragment>
         ])
     );
 }
