@@ -21,7 +21,7 @@ function AsGuest() {
 
             <Form
                 name='guest-username'
-                className='mt-6'
+                className='mt-6 grid'
             >
                 <TextField
                     label='Username'
@@ -51,8 +51,7 @@ function AsGuest() {
                     link
                     tag='div'
                     primary
-                    block
-                    className='mt-3 mb-6 mx-0'
+                    className='mt-3 mb-6 mx-0 justify-self-center'
                 />
 
                 <Button
