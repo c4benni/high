@@ -1,10 +1,12 @@
 import React, { ReactNode } from 'react'
+import { ClassName, className } from '../utils/main'
 
 import './main.css'
 
 type DividerProps = {
     children?: ReactNode;
     text?: string;
+    className?: ClassName;
     [key: string]: any;
 }
 
@@ -12,7 +14,7 @@ function Divider(props: DividerProps) {
 
     return (
         <div
-            className={['Divider', props.className || ''].filter(Boolean).join(' ')}
+            className={className(['Divider', props.className || ''])}
         >
             {props.text || props.children}
         </div>
