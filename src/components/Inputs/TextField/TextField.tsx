@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useEffect } from 'react';
 import { ClassName, className } from '../../utils/main';
 import { Slot } from '../../utils/types';
 
@@ -13,10 +13,13 @@ type PropType = {
     model?: InputValue;
     className?: ClassName;
     inputClassName?: ClassName;
+    wrapperClassName?: ClassName;
     value?: string;
     onModel?: Function;
     prepend?: Slot;
     append?: Slot;
+    hideLabel?: boolean;
+    disabled?: boolean;
     [key: string]: any;
 }
 
@@ -24,14 +27,12 @@ let instances = 0;
 
 function TextField(props: PropType) {
 
-    const [id, setId] = useState('')
-
     useEffect(() => {
         instances++;
 
-        setId(`input-${instances}`)
-
     }, [props])
+
+    const id = `input-${instances}`
 
     const onInput = (e: FormEvent) => {
         if (typeof props.onInput == 'function') {
@@ -46,15 +47,33 @@ function TextField(props: PropType) {
     return (
         <div className={
             className([
-                "inline-grid gap-y-1",
+                "TextFieldRoot",
                 props.className || ''
             ])
         }>
-            <label htmlFor={id} className="text-sm xl:text-base text-gray-800 dark:text-gray-200">
+            <label
+                htmlFor={id}
+                className={
+                    className([
+                        'text-sm xl:text-base text-gray-800 dark:text-gray-200',
+                        {
+                            'sr-only': props.hideLabel
+                        }
+                    ])
+                }
+            >
                 {props.label}
             </label>
 
-            <div className='relative'>
+            <div className={
+                className([
+                    'TextFieldWrap',
+                    {
+                        'disabled fill-before': props.disabled
+                    },
+                    props.wrapperClassName
+                ])
+            }>
                 {
                     props.prepend
                 }
@@ -63,6 +82,7 @@ function TextField(props: PropType) {
                     placeholder={props.placeholder}
                     value={props.value}
                     id={id}
+                    disabled={props.disabled}
                     onInput={onInput}
                     className={
                         className([
