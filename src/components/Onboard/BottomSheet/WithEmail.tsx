@@ -37,10 +37,10 @@ function AuthWithEmail(props: Props) {
                 type: 'email'
             },
             password,
-            {
-                ...password,
-                label: 'Confirm password'
-            }
+            // {
+            //     ...password,
+            //     label: 'Confirm password'
+            // }
         ];
 
         const signIn = [
@@ -131,7 +131,7 @@ function AuthWithEmail(props: Props) {
                                 // @ts-ignore
                                 type={input?.type || 'text'}
                                 className={{
-                                    'pt-3': key > 0
+                                    'pt-3 md:pt-4': key > 0
                                 }}
                             />
                         })
