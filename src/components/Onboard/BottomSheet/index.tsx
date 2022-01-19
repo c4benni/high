@@ -56,12 +56,12 @@ function AuthBottomSheet(props: Props) {
             }
         >
             {
-                ({ bind, close }: { bind: ReactEventHandler, close: Function }) => {
+                ({ bind }: { bind: ReactEventHandler, close: Function }) => {
                     const rootHeight = `calc(${window.innerHeight}px - ${breakpoint.orientation === 'landscape' ? '0px' : '16px'})`;
 
                     return (
                         <div
-                            className='grid grid-rows-[auto,1fr,auto] md:grid-rows-1 h-full relative md:shadow-2xl'
+                            className='grid grid-rows-[auto,1fr,auto] md:grid-rows-1 h-full relative md:shadow-2xl w-full md:w-[60vw] max-w-[1000px] mx-auto'
                             style={{
                                 maxHeight: rootHeight,
                             }}
