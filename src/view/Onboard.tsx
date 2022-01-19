@@ -12,7 +12,7 @@ function Onboard() {
         <div
             className={
                 className([
-                    'grid grid-flow-col h-full items-start isolate md:grid-cols-[auto,1fr]',
+                    'grid grid-flow-col h-full items-start isolate md:grid-cols-[auto,1fr] max-w-[90rem] mx-auto',
                     {
                         dark: breakpoint.isMobile
                     }
