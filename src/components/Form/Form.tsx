@@ -25,9 +25,8 @@ function Submit(props: SubmitButton) {
                 primary
                 {...props.submitProps}
                 onClick={attemptSubmit}
-            >
-                {props.submitText}
-            </Button>
+                title={props.submitText}
+            />
         )
         : null
 }
