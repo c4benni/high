@@ -102,7 +102,12 @@ function SignIn(props: Props) {
                         }
                     </div>
 
-                    <Divider text='or' className="my-8 text-white" />
+                    <Divider text='or' className={[
+                        "my-8",
+                        {
+                            'text-white': breakpoint.isMobile
+                        }
+                    ]} />
 
                     <Button
                         className={`${buttonClass} justify-self-center`}
