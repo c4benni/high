@@ -9,7 +9,7 @@ function Header() {
         className={
             className([
                 breakpoint.isMobile ? [] : [
-                    'h-[48px] fixed top-0 w-[calc(100%-312px)] right-0 bg-inherit border-b chat-divide-color'
+                    'h-[48px] fixed top-0 w-[calc(100%-316px)] right-0 bg-inherit border-b chat-divide-color'
                 ]
             ])
         }
