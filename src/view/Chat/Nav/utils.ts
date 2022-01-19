@@ -1,13 +1,13 @@
 import { ChatEmpty } from "../../../components/Icon/Generic/ChatEmpty";
 import { CreateIcon } from "../../../components/Icon/Generic/Create";
 import { EmptyNotificationIcon } from "../../../components/Icon/Generic/EmptyNotification";
-import { GlobeIcon } from "../../../components/Icon/Generic/Globe";
+import { RoomIcon } from "../../../components/Icon/Generic/Room";
 import { SettingIcon } from "../../../components/Icon/Generic/Setting";
 
 export const navLinks = [
   {
-    title: "Global",
-    icon: GlobeIcon({}),
+    title: "Rooms",
+    icon: RoomIcon({}),
   },
   {
     title: "Chats",
