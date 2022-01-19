@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
-import { className } from '../../utils/main';
+import AppLoader from '../../Display/Loader';
+import { ClassName, className } from '../../utils/main';
 import './main.css'
 
 
@@ -16,7 +17,9 @@ type ButtonProps = {
     icon?: boolean;
     primary?: boolean;
     overlay?: boolean;
+    loading?: boolean;
     [key: string]: any;
+    className?: ClassName;
 }
 
 function Button(props: ButtonProps) {
@@ -77,13 +80,19 @@ function Button(props: ButtonProps) {
                 ]
             )
         }, [
-            props.children || props.title
+            props.loading ? (
+                <AppLoader
+                    key={'loader'}
+                    className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
+                />
+            ) :
+                (props.children || props.title)
         ])
     );
 }
 
 Button.defaultProps = {
-    size: 'md'
+    size: 'md',
 }
 
 export default Button;
