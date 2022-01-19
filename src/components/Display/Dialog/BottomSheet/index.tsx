@@ -4,7 +4,7 @@ import './main.css';
 import { className } from '../../../utils/main'
 import { useSpring, a, config } from '@react-spring/web'
 import { useDrag } from 'react-use-gesture'
-import { hackTabKey, nextTick } from '../../../../utils/main';
+import { hackTabKey, nextAnimFrame } from '../../../../utils/main';
 import { ControlledFocus } from '../../../../utils/ControlledFocus';
 import { eventKey } from '../../../../utils/eventKey';
 import useBreakpoint from '../../../../hooks/breakpoint';
@@ -61,7 +61,7 @@ export default function BottomSheet(props: Props) {
             $transitionState('enter')
 
         props.onModel && props.onModel(true)
-        // await nextTick()
+        await nextAnimFrame()
 
         // so we change the spring config to create a nice wobbly effect
         api.start({
@@ -95,7 +95,8 @@ export default function BottomSheet(props: Props) {
     const close = useCallback(async (velocity = 0) => {
         props.onModel &&
             props.onModel(false)
-        await nextTick()
+        await nextAnimFrame()
+
         api.start({
             y: breakpoint.isMobile ? height : undefined,
             scale: breakpoint.isMobile ? undefined : scaleFrom,
