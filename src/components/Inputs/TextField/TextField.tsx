@@ -1,5 +1,6 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { ClassName, className } from '../../utils/main';
+import { Slot } from '../../utils/types';
 
 import './main.css'
 
@@ -10,7 +11,13 @@ type PropType = {
     type?: string;
     placeholder?: string;
     model?: InputValue;
-    className?: ClassName
+    className?: ClassName;
+    inputClassName?: ClassName;
+    value?: string;
+    onModel?: Function;
+    prepend?: Slot;
+    append?: Slot;
+    [key: string]: any;
 }
 
 let instances = 0;
@@ -19,21 +26,21 @@ function TextField(props: PropType) {
 
     const [id, setId] = useState('')
 
-    const [value, setValue] = useState<InputValue>()
-
     useEffect(() => {
         instances++;
 
         setId(`input-${instances}`)
 
-        if (/string|boolean|number/.test(typeof props.model)) {
-            // @ts-ignore;
-            setValue(props.model);
-        }
     }, [props])
 
     const onInput = (e: FormEvent) => {
-        // setValue(e.target.value)
+        if (typeof props.onInput == 'function') {
+            props.onInput(e)
+        }
+        if (props.onModel) {
+            const inputEl = e.target as HTMLInputElement;
+            props.onModel(inputEl.value);
+        }
     }
 
     return (
@@ -47,14 +54,27 @@ function TextField(props: PropType) {
                 {props.label}
             </label>
 
-            <input
-                type={props.type}
-                placeholder={props.placeholder}
-                value={value}
-                id={id}
-                onInput={onInput}
-                className="TextField"
-            />
+            <div className='relative'>
+                {
+                    props.prepend
+                }
+                <input
+                    type={props.type}
+                    placeholder={props.placeholder}
+                    value={props.value}
+                    id={id}
+                    onInput={onInput}
+                    className={
+                        className([
+                            "TextField",
+                            props.inputClassName || ''
+                        ])
+                    }
+                />
+                {
+                    props.append
+                }
+            </div>
         </div>
     );
 }
