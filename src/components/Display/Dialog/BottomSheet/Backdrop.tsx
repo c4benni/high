@@ -13,7 +13,7 @@ function BottomSheetBackdrop(props: Props) {
             <div
                 className={
                     className([
-                        'transition-opacity bg-black bg-opacity-50 fixed w-full h-full left-0 top-0 fade-appear',
+                        'transition-opacity bg-black bg-opacity-50 md:bg-opacity-70 fixed w-full h-full left-0 top-0 fade-appear',
                         {
                             'opacity-100': props.active,
                             'opacity-0': !props.active
