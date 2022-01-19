@@ -61,7 +61,7 @@ function AuthBottomSheet(props: Props) {
 
                     return (
                         <div
-                            className='grid grid-rows-[auto,1fr,auto] md:grid-rows-1 h-full relative'
+                            className='grid grid-rows-[auto,1fr,auto] md:grid-rows-1 h-full relative md:shadow-2xl'
                             style={{
                                 maxHeight: rootHeight,
                             }}
