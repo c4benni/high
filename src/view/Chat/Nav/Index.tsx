@@ -25,9 +25,9 @@ function Nav() {
             <ul
                 className={
                     className([
-                        'grid grid-flow-col md:grid-flow-row h-full fill-before relative before:bg-primary-700 dark:before:bg-primary-500 before:rounded-lg before:transform-gpu before:transition-transform',
+                        'grid grid-flow-col md:grid-flow-row h-full fill-before relative before:bg-primary-700 dark:before:bg-primary-600 before:transform-gpu before:transition-transform',
                         !breakpoint.isMobile ? [
-                            'grid-rows-[repeat(3,auto),1fr] gap-y-4 py-6 before:h-[56px] before:left-auto before:-right-1 before:w-1 before:my-6 before:z-10',
+                            'grid-rows-[repeat(3,auto),1fr] gap-y-4 py-6 before:h-[56px] before:left-auto before:-right-1 before:w-1 before:my-6 before:z-10 before:rounded-r-lg',
                             {
                                 'before:translate-y-[calc(100%+1rem)]': activeIndex === 1,
                                 'before:translate-y-[calc(200%+2rem)]': activeIndex === 2,
@@ -35,7 +35,7 @@ function Nav() {
                                 'before:translate-y-[calc(100vh-3rem-100%)]': activeIndex === 4,
                             }
                         ] : [
-                            'grid-cols-[repeat(5,1fr)] before:h-[2px] before:w-[20vw]',
+                                'grid-cols-[repeat(5,1fr)] before:h-[2px] before:w-[20vw] before:rounded-lg',
                             {
                                 'before:translate-x-[100%]': activeIndex === 1,
                                 'before:translate-x-[200%]': activeIndex === 2,
