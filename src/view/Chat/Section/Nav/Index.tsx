@@ -3,6 +3,7 @@ import { className } from '../../../../components/utils/main';
 import useBreakpoint from '../../../../hooks/breakpoint';
 import { classNames } from '../utils';
 import Header from './Header';
+import Rooms from './Rooms/Index';
 
 function Nav() {
     const [breakpoint] = useBreakpoint();
@@ -19,6 +20,8 @@ function Nav() {
     >
 
         <Header />
+
+        <Rooms />
 
     </nav>;
 }
