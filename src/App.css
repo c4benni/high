@@ -315,7 +315,7 @@ svg,
 }
 
 .Alert.warn {
-  @apply border-warning-600 bg-warning-600 bg-opacity-20 text-gray-800 dark:text-gray-50;
+  @apply border-warning-400 dark:border-warning-700 bg-warning-600 bg-opacity-20 text-gray-800 dark:text-gray-50;
 }
 
 .Alert.warn > .IconWrapper {
