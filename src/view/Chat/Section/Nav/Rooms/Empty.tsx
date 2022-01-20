@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { } from 'react';
 import { ArrowRight } from '../../../../../components/Icon/Generic/ArrowRight';
 import { PlusIcon } from '../../../../../components/Icon/Generic/Plus';
 import IconWrapper from '../../../../../components/Icon/Logo/IconWrapper';
@@ -6,7 +6,7 @@ import Button from '../../../../../components/Inputs/Button/Button';
 
 function Empty() {
     return <div
-        className='grid justify-center pt-8 pb-6 px-3'
+        className='grid justify-items-center pt-8 pb-6 px-3'
     >
         <p
             className='text-caption mb-6'
