@@ -21,6 +21,8 @@ export default function useBreakpoint() {
 
   useEffect(() => {
     if (!breakpointState.is) {
+      console.log("br not set well");
+      
       const updateBreakpoint = (br: BreakpointOutput) =>
         dispatch(setBreakpoint(br));
 
