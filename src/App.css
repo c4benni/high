@@ -280,7 +280,7 @@ button,
 img,
 svg,
 .badge,
-.select-none,
+.no-select,
 .pseudo,
 *:disabled {
   -webkit-user-select: none;
@@ -295,7 +295,11 @@ svg,
 }
 
 .text-caption {
-  @apply text-gray-700 dark:text-gray-300 text-sm;
+  @apply text-gray-600 dark:text-gray-400 text-sm;
+}
+
+.text-body {
+  @apply text-gray-700 dark:text-gray-300 text-base;
 }
 
 .will-change-opacity {
@@ -330,4 +334,14 @@ svg,
 
 .bg-inherit{
   background: inherit;
+}
+
+.before\:bg-\[inherit\]::before{
+  background: inherit;
+}
+
+.show-scrollbar-on-hover:not(:hover)::-webkit-scrollbar-corner, 
+.show-scrollbar-on-hover:not(:hover)::-webkit-scrollbar-track,
+.show-scrollbar-on-hover:not(:hover)::-webkit-scrollbar-thumb{
+  background: transparent;
 }
