@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { className } from '../../../../components/utils/main';
 import useBreakpoint from '../../../../hooks/breakpoint';
 import { classNames } from '../utils';
@@ -7,6 +7,8 @@ import Rooms from './Rooms/Index';
 
 function Nav() {
     const [breakpoint] = useBreakpoint();
+
+    const [searchInput, setSearchInput] = useState('');
 
     return <nav
         className={
@@ -19,9 +21,14 @@ function Nav() {
         }
     >
 
-        <Header />
+        <Header
+            searchInput={searchInput}
+            onSearchInput={setSearchInput}
+        />
 
-        <Rooms />
+        <Rooms
+            filter={searchInput}
+        />
 
     </nav>;
 }
