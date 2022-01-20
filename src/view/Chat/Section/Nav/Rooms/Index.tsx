@@ -1,9 +1,14 @@
 import React from 'react';
-import Empty from './Empty';
+import List from './List';
+// import Empty from './Empty';
 
-function Rooms() {
+type Props = {
+    filter: string;
+}
+
+function Rooms(props: Props) {
     return <div>
-        <Empty />
+        <List filter={props.filter} />
     </div>;
 }
 
