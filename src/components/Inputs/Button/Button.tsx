@@ -1,16 +1,21 @@
 import React, { Fragment } from 'react';
 import AppLoader from '../../Display/Loader';
+import IconWrapper from '../../Icon/Logo/IconWrapper';
 import { ClassName, className } from '../../utils/main';
 import { Slot } from '../../utils/types';
 import './main.css'
 
 
 type ButtonProps = {
-    type?: string;
-    tag?: string;
     children?: Slot;
     append?: Slot;
     prepend?: Slot;
+    iconSlot?: Slot;
+    disabled?: boolean;
+    type?: string;
+    tag?: string;
+    outlined?: boolean;
+    htmlTitle?: string;
     title?: string;
     link?: boolean;
     block?: boolean;
@@ -23,6 +28,7 @@ type ButtonProps = {
     loading?: boolean;
     [key: string]: any;
     className?: ClassName;
+    onClick?: Function;
 }
 
 function Button(props: ButtonProps) {
@@ -32,7 +38,7 @@ function Button(props: ButtonProps) {
     const events = {} as { [key: string]: any };
 
     for (const key in props) {
-        if (/on[A-Z]/.test(key)) {
+        if (/^on[A-Z]/.test(key)) {
             events[key] = props[key]
         }
     }
@@ -40,6 +46,7 @@ function Button(props: ButtonProps) {
     return (
         React.createElement(tag, {
             ...events,
+            title: props.htmlTitle,
             tabIndex:
                 props.disabled ? '-1' : !/button|a/.test(tag) ? '0' : undefined,
             disabled: props.disabled,
@@ -49,7 +56,9 @@ function Button(props: ButtonProps) {
                     {
                         'link underline-effect': props.link,
                         'filled': !props.link,
-                        'grid w-full': props.block
+                        'grid w-full': props.block,
+                        'outlined fill-after': props.outlined,
+                        'opacity-60 disabled cursor-not-allowed before:invisible after:invisible grayscale': props.disabled
                     },
                     !props.link
                         ? [
@@ -57,8 +66,8 @@ function Button(props: ButtonProps) {
                             props.size,
                             {
                                 icon: props.icon,
-
-                                primary: props.primary,
+                                primary: props.primary && !props.outlined,
+                                'primary-text': props.outlined,
                                 'no-bg': !props.primary,
                                 'hide-plain-focus': props.hidePlainFocus,
 
@@ -76,6 +85,11 @@ function Button(props: ButtonProps) {
                 key={'children-frag'}
             >
                 {
+                    props.icon && props.iconSlot ?
+                        <IconWrapper>
+                            {props.iconSlot}
+                        </IconWrapper>
+                        :
                     (props.children || [
                         <Fragment
                             key={'inner-frag'}

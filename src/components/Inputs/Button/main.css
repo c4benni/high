@@ -19,13 +19,17 @@
   .Button.underline-effect{
     @apply hover:after:translate-x-0 hover:after:opacity-70 
   }
+
+  .Button.icon{
+    @apply hover:opacity-90
+  }
 }
 
 .Button.underline-effect {
   @apply after:w-full after:absolute after:h-[1px] after:bg-primary-700 dark:after:bg-primary-500 after:opacity-0 after:bottom-0 after:translate-x-[-100%] after:transform-gpu after:transition-all;
 }
 .Button {
-  @apply inline-grid grid-flow-col gap-x-2 relative overflow-hidden isolate items-center justify-center cursor-pointer transform-gpu;
+  @apply inline-grid grid-flow-col gap-x-2 relative overflow-hidden isolate items-center justify-center cursor-pointer transform-gpu select-none;
   transition: 0.35s ease;
   transition-property: opacity, transform;
   --pseudo-bg: currentColor;
@@ -51,15 +55,15 @@
 
 
 .Button.sm {
-  @apply px-3 h-[34px] text-[0.825rem] rounded-sm;
+  @apply px-3 h-[38px] text-sm rounded-sm;
 }
 
 .Button.md {
-  @apply px-6 h-[44px] text-base xs:text-[1.03rem] md:text-[1.075rem] rounded-md;
+  @apply px-4 h-[44px] text-base xs:text-[1.03rem] md:text-[1.075rem] rounded-md;
 }
 
 .Button.lg {
-  @apply px-9 h-[56px] text-lg rounded-lg;
+  @apply px-7 h-[56px] text-lg rounded-lg;
 }
 
 
@@ -96,7 +100,7 @@
 
 .Button.filled {
 @apply outline-none ring-offset-white dark:ring-offset-black
-ring-offset-1 ring-primary-900 dark:ring-primary-600;
+ring-offset-1 ring-primary-800 dark:ring-primary-600;
   width: fit-content;
 }
 
@@ -109,7 +113,7 @@ ring-offset-1 ring-primary-900 dark:ring-primary-600;
 }
 
 .Button.icon {
-  @apply px-0 h-[38px] w-[38px] text-base rounded-full;
+  @apply px-0 h-[32px] w-[32px] text-base rounded-full before:opacity-5 active:before:opacity-20 opacity-80 active:opacity-100;
 }
 
 .Button.primary {
@@ -119,4 +123,8 @@ ring-offset-1 ring-primary-900 dark:ring-primary-600;
 
 .Button.primary-text{
   @apply text-primary-700 dark:text-primary-400;
+}
+
+.Button.outlined{
+  @apply after:border after:bg-[transparent] after:border-primary-700 dark:after:border-primary-500
 }
