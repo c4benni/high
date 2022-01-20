@@ -1,7 +1,7 @@
 import React, { ReactEventHandler, useState, } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useBreakpoint from '../../../hooks/breakpoint';
-import BottomSheet from '../../Display/Dialog/BottomSheet'
+import BottomSheet from '../../Display/Overlay/BottomSheet'
 import { CloseIcon } from '../../Icon/Generic/Close';
 import IconWrapper from '../../Icon/Logo/IconWrapper';
 import Button from '../../Inputs/Button/Button';
