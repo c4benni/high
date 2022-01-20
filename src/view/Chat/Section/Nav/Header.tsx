@@ -5,8 +5,13 @@ import IconWrapper from '../../../../components/Icon/Logo/IconWrapper';
 import TextField from '../../../../components/Inputs/TextField/TextField';
 import { className } from '../../../../components/utils/main';
 
-function Header() {
-    const disableInput = true;
+type Props = {
+    searchInput: string;
+    onSearchInput: Function
+}
+
+function Header(props: Props) {
+    const disableInput = false;
 
     return <header
         className={
@@ -17,22 +22,26 @@ function Header() {
     >
         <Form
             name='search-MAKE_REACTIVE!!!!!!!!'
+            className='mx-auto w-full'
         >
             <TextField
                 label='Search'
-                placeholder='Search'
+                // make this reactive too!!!!
+                placeholder='Search rooms'
+                value={props.searchInput}
+                onModel={props.onSearchInput}
                 hideLabel
                 disabled={disableInput}
                 className='text-sm'
                 wrapperClassName={[
                     'h-[40px] md:h-[28px]'
                 ]}
-                inputClassName={'pr-[28px] border-none bg-gray-200 dark:bg-gray-900'}
+                inputClassName={'pl-[32px] md:pl-[24px] border-none bg-gray-200 dark:bg-gray-900'}
                 append={
                     <IconWrapper
                         className={
                             className([
-                                'absolute w-[24px] pointer-events-none right-0',
+                                'absolute w-[32px] md:w-[24px] justify-center flex pointer-events-none left-0',
                                 {
                                     'opacity-70': !disableInput
                                 }
