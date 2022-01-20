@@ -1,0 +1,39 @@
+.BottomSheet {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  touch-action: none;
+  display: grid;
+  justify-items: center;
+}
+
+.BottomSheet.active {
+  pointer-events: auto;
+}
+
+.BottomSheetContentWrapper {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  align-items: flex-end;
+  position: relative;
+}
+
+.BottomSheetContentWrapper.active {
+  pointer-events: auto;
+}
+
+.BottomSheetContent {
+  pointer-events: auto;
+  z-index: 100;
+  position: fixed;
+  height: var(--height);
+  touch-action: none;
+  touch-action: initial;
+  @apply w-full left-0 md:w-fit md:left-auto bg-white dark:bg-gray-800 rounded-t-lg md:rounded-lg;
+  box-shadow: 0 -25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
