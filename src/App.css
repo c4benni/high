@@ -153,6 +153,34 @@ textarea {
   background-color: var(--pseudo-bg, initial);
 }
 
+.before-interact::before,
+.after-interact::after,
+.pseudo-interact {
+  z-index: -1;
+  background-color: currentColor;
+  @apply transition-opacity opacity-0;
+}
+
+@media (pointer: fine) and (hover: hover) {
+  .before-interact:focus::before,
+  .after-interact:focus::after,
+  .pseudo-interact:focus {
+    @apply opacity-[0.15];
+  }
+
+  .before-interact:hover::before,
+  .after-interact:hover::after,
+  .pseudo-interact:hover {
+    @apply opacity-10;
+  }
+}
+
+.before-interact:active::before,
+.after-interact:active::after,
+.pseudo-interact:active {
+  @apply opacity-20;
+}
+
 *,
 :after,
 :before {
@@ -306,12 +334,12 @@ svg,
   will-change: opacity;
 }
 
-.divide-border-default-color {
+.default-border-color {
   @apply border-gray-200 dark:border-gray-700;
 }
 
-.chat-divide-color{
-  @apply border-gray-200 dark:border-gray-900
+.chat-divide-color {
+  @apply border-gray-200 dark:border-gray-900;
 }
 
 .Alert {
@@ -332,16 +360,20 @@ svg,
   opacity: 0.9;
 }
 
-.bg-inherit{
+.bg-inherit {
   background: inherit;
 }
 
-.before\:bg-\[inherit\]::before{
+.before\:bg-\[inherit\]::before {
   background: inherit;
 }
 
-.show-scrollbar-on-hover:not(:hover)::-webkit-scrollbar-corner, 
+.show-scrollbar-on-hover:not(:hover)::-webkit-scrollbar-corner,
 .show-scrollbar-on-hover:not(:hover)::-webkit-scrollbar-track,
-.show-scrollbar-on-hover:not(:hover)::-webkit-scrollbar-thumb{
+.show-scrollbar-on-hover:not(:hover)::-webkit-scrollbar-thumb {
   background: transparent;
+}
+
+#ui-overlay{
+  display: inline;
 }
