@@ -80,8 +80,14 @@ export const nextAnimFrame = (callback?: Function): Promise<void> => {
   );
 };
 
-export const nextTick = async () =>
-  await new Promise<void>((resolve) => resolve()); 
+export const nextTick = async (cb?: Function) => {
+  if (typeof cb == "function") {
+    await new Promise<void>((resolve) => {
+      resolve();
+      cb();
+    });
+  } else return await new Promise<void>((resolve) => resolve());
+};
 
 export function hackTabKey(
   e: KeyboardEvent,
