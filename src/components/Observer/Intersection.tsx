@@ -16,7 +16,10 @@ type PropsType = {
     once?: boolean;
     options?: IntersectionConfig;
     disabled?: boolean;
-    children: Function;
+    children: (
+        ref: React.MutableRefObject<null>,
+        entry: IntersectionObserverEntry | null
+    ) => JSX.Element;
     onceIntercepted?: Function;
     onUpdate?: Function;
 };
@@ -39,7 +42,10 @@ const Intersection = (props: PropsType) => {
     };
 
     useEffect(() => {
-        const observer = new IntersectionObserver(callback, options);
+        const observer = new IntersectionObserver(callback, {
+            ...defaultConfig,
+            ...options
+        });
         let target: HTMLElement;
 
         if (intersectionRef.current) {
