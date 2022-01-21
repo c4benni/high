@@ -100,7 +100,7 @@ function AuthBottomSheet(props: Props) {
                             {
                                 breakpoint.isMobile ?
                                     <div
-                                        className='h-[48px] w-full border-t-[0.75px] divide-border-default-color p-1'
+                                        className='h-[48px] w-full border-t-[0.75px] default-border-color p-1'
                                     >
                                         <Button block className='h-full rounded-none text-error-700 dark:text-error-400 uppercase ring-error-700 dark:ring-error-400'
                                             onClick={
