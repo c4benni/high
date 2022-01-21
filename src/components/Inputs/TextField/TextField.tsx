@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { ClassName, className } from '../../utils/main';
 import { Slot } from '../../utils/types';
 
@@ -23,16 +23,13 @@ type PropType = {
     [key: string]: any;
 }
 
-let instances = 0;
-
 function TextField(props: PropType) {
 
+    const [id, setUid] = useState('')
+
     useEffect(() => {
-        instances++;
-
-    }, [props])
-
-    const id = `input-${instances}`
+        setUid(`i-${performance.now().toString(36).replace(/\./, '_')}`)
+    }, [setUid])
 
     const onInput = (e: FormEvent) => {
         if (typeof props.onInput == 'function') {
