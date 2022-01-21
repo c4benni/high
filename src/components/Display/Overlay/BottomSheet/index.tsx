@@ -4,11 +4,10 @@ import './main.css';
 import { className } from '../../../utils/main'
 import { useSpring, a, config } from '@react-spring/web'
 import { useDrag } from 'react-use-gesture'
-import { hackTabKey, nextTick } from '../../../../utils/main';
-import { ControlledFocus } from '../../../../utils/ControlledFocus';
-import { eventKey } from '../../../../utils/eventKey';
+import { nextTick } from '../../../../utils/main';
 import useBreakpoint from '../../../../hooks/breakpoint';
 import BottomSheetBackdrop from './Backdrop';
+import { removeOverlayZIndex, restoreFocus, setOverlayZindex, toggleHTMLScroll, trapFocus } from '../utils';
 
 type Props = {
     open: boolean;
@@ -26,6 +25,11 @@ type TransitionState = 'enter' | 'afterenter' | 'leave' | 'afterleave';
 
 export default function BottomSheet(props: Props) {
     const { height } = props;
+
+    const rootRef = useRef(null);
+
+    // zIndex is set on enter
+    const [zIndex, setZIndex] = useState<string>();
 
     const scaleFrom = 0.75
 
@@ -62,6 +66,10 @@ export default function BottomSheet(props: Props) {
 
         props.onModel && props.onModel(true)
         await nextTick()
+
+        if (!entered) {
+            setOverlayZindex(rootRef, setZIndex)
+        }
 
         // so we change the spring config to create a nice wobbly effect
         api.start({
@@ -111,10 +119,15 @@ export default function BottomSheet(props: Props) {
                 $transitionState('afterleave')
                 props.onModel &&
                     props.onModel(false)
+
                 $entered(false)
 
-                requestAnimationFrame(() => {
-                    props.onAfterLeave && props.onAfterLeave()
+                removeOverlayZIndex(rootRef, () => {
+                    !props.open && setZIndex("");
+
+                    requestAnimationFrame(() => {
+                        props.onAfterLeave && props.onAfterLeave()
+                    })  
                 })
             },
         })
@@ -130,12 +143,12 @@ export default function BottomSheet(props: Props) {
 
             $previousActive(document.activeElement as HTMLElement);
 
-            document.documentElement.classList.add('dialog-active')
+            toggleHTMLScroll('add')
         } else if (!open && transitionState !== 'afterleave') {
             close()
-            previousActive && previousActive.focus()
+            restoreFocus(previousActive, rootRef)
             $previousActive(null);
-            document.documentElement.classList.remove('dialog-active')
+            toggleHTMLScroll('remove')
         }
     }, [$previousActive, openSheet, previousActive, props, transitionState, close])
 
@@ -172,16 +185,20 @@ export default function BottomSheet(props: Props) {
         ReactDOM.createPortal(
             (
                 <div
+                    ref={rootRef}
                     key={breakpoint.is}
                     className={
-                    className([
-                        'BottomSheet',
-                        {
-                            active: props.open,
-                            invisible: transitionState === 'afterleave'
-                        }
-                    ])
-                }
+                        className([
+                            'BottomSheet',
+                            {
+                                active: props.open,
+                                invisible: transitionState === 'afterleave'
+                            }
+                        ])
+                    }
+                    style={{
+                        zIndex,
+                    }}
                 >
                     {
                         <BottomSheetBackdrop
@@ -205,23 +222,7 @@ export default function BottomSheet(props: Props) {
                                         ])
                                     }
                                     onKeyDown={(e) => {
-                                        const key = eventKey(e.nativeEvent);
-                                        if (key === 'esc') {
-                                            return close()
-                                        }
-                                        hackTabKey(e as unknown as KeyboardEvent, (evt) => {
-                                            const controlledFocus =
-                                                new ControlledFocus({
-                                                    children: '*',
-                                                    root: evt?.currentTarget as HTMLElement,
-                                                })
-
-                                            if (evt?.shiftKey) {
-                                                controlledFocus.backward();
-                                            } else {
-                                                controlledFocus.forward()
-                                            }
-                                        })
+                                        trapFocus(e, close, rootRef)
                                     }}
                                     style={{
                                         ...props.style,
@@ -247,7 +248,7 @@ export default function BottomSheet(props: Props) {
                     }
                 </div>
             ),
-            document.body
+            document.getElementById('ui-overlay') || document.body
         )
     )
 }
