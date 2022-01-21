@@ -19,8 +19,12 @@ module.exports = {
     success: colors.green,
     warning: colors.amber,
     error: colors.red,
+    info: colors.blue,
   },
   extend: {
+    zIndex: {
+      1: "1",
+    },
     gridTemplateRows: {
       "[auto,auto,1fr]": "auto auto 1fr",
     },
