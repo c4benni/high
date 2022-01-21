@@ -6,3 +6,7 @@ export type ImgProps = {
   publicId: string;
   alt: string;
 };
+
+export type DynamicObject<T> = {
+  [key: string]: T;
+};
