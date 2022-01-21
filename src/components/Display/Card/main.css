@@ -1,0 +1,3 @@
+.ContactCard{
+    @apply grid grid-flow-col gap-x-2 justify-start relative isolate py-2 outline-none h-[62px];
+}
