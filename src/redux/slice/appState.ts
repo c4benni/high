@@ -12,7 +12,7 @@ export type AppStateSlice = {
 const initialState: AppStateSlice = {
   chatAside: {
     visible: true,
-    disabled: true,
+    disabled: false,
   },
 };
 
