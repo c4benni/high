@@ -1,0 +1,29 @@
+.enter {
+  opacity: var(--fade-enter-from, 0) !important;
+}
+
+.enterActive,
+.exitActive {
+  transition-property: opacity;
+  transition-duration: var(--fade-duration, 284ms) !important;
+  transition-timing-function: var(--fade-ease, ease-in-out) !important;
+}
+
+.enterActive{
+  opacity: var(--fade-enter-to, 1) !important;
+}
+
+.exit {
+  opacity: var(--fade-exit-from, 1) !important;
+}
+
+.exitActive {
+  opacity: var(--fade-exit-to, 0) !important;
+}
+
+.enter,
+.exit,
+.enterActive,
+.exitActive{
+  will-change: opacity !important;
+}
