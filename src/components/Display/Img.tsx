@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { Image, Placeholder, } from 'cloudinary-react';
+import { className, ClassName } from '../utils/main';
 
 export type ImgProps = {
     publicId?: string;
     src?: string;
     alt: string;
-    className?: string;
+    className?: ClassName;
     width?: string | number;
     height?: string | number;
+    loading?: 'lazy' | 'eager',
     [key: string]: any;
 }
 
@@ -17,12 +19,15 @@ function Img(props: ImgProps) {
     return (
         <Image
             {...props}
-            className={[
-                loaded === false ? 'invisible' : '',
+            className={className([
+                {
+                    invisible: loaded === false
+                },
                 props.className
-            ].filter(Boolean).join(' ')}
-            loading="lazy"
+            ])}
+            loading={props.loading}
             quality={70}
+            decoding='async'
             onLoad={() => {
                 $loaded(true)
             }}
@@ -34,6 +39,10 @@ function Img(props: ImgProps) {
                 type="predominant" />
         </Image>
     )
+}
+
+Img.defaultProps = {
+    loading: 'lazy'
 }
 
 export default Img
