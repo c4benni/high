@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { className } from '../../../components/utils/main'
 import useBreakpoint from '../../../hooks/breakpoint'
 import { useChatAside } from '../../../hooks/utils'
@@ -7,10 +7,24 @@ import Header from './Header'
 import Main from './Main/Index'
 import Nav from './Nav/Index'
 
+
+// to add fade-appear on aside after it has been toggled;
+// on large devices
+let asideToggled = -1
+
 function Section() {
+
     const [breakpoint] = useBreakpoint();
 
     const [showAside] = useChatAside()
+
+    useEffect(() => {
+        if ((!showAside || showAside) && (asideToggled < 1)) {
+            asideToggled += 1
+        }
+    }, [
+        showAside
+    ])
 
     return (
         <section
@@ -34,7 +48,13 @@ function Section() {
             <Main />
 
             {
-                showAside.visible ? <Aside /> : null
+                showAside.visible ?
+                    <Aside
+                        className={{
+                            'fade-appear': asideToggled && !breakpoint.isMobile
+                        }}
+                    />
+                    : null
             }
 
         </section>
