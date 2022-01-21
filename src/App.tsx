@@ -5,8 +5,19 @@ import { Root } from './view/Root';
 
 import { CloudinaryContext } from 'cloudinary-react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { useEffect } from 'react';
+
+let overlayWrapperCreated = false;
 
 function App() {
+  useEffect(() => {
+    if (overlayWrapperCreated === false) {
+      const overlayWrapper = document.createElement('div')
+      overlayWrapper.id = 'ui-overlay';
+      document.body.append(overlayWrapper)
+      overlayWrapperCreated = true
+    }
+  })
   return (
     // @ts-ignore
     <Router>
