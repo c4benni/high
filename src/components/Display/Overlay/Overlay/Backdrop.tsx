@@ -8,13 +8,14 @@ type Props = {
     onToggle: (arg: boolean) => void;
     duration: number;
     background?: ClassName;
+    opacity?: number;
 }
 
 function Backdrop(props: Props) {
     const {
         open, onToggle,
         background = 'bg-black bg-opacity-50',
-        duration
+        duration, opacity
     } = props;
 
     const rootRef = useRef(null)
@@ -40,6 +41,7 @@ function Backdrop(props: Props) {
             style={{
                 // @ts-ignore
                 '--fade-duration': `${duration + 16}ms`,
+                opacity 
             }}
         />
     </CSSTransition>

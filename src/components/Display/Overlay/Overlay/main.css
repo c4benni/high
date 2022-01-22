@@ -1,7 +1,7 @@
-.Dialog{
+.Overlay{
     @apply fixed top-0 left-0 w-full h-full grid justify-center items-center isolate p-[0.5rem] select-none;
 }
 
-.DialogContent{
+.OverlayContent{
     @apply relative outline-none focus-visible:outline;
 }
