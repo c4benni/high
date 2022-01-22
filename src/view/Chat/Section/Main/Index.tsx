@@ -1,6 +1,6 @@
 import React from 'react';
 import Room from './Room';
-import TextArea from './TextArea';
+import Textarea from './TextArea';
 
 function Main() {
     return <main
@@ -9,7 +9,7 @@ function Main() {
 
         <Room />
 
-        <TextArea />
+        <Textarea />
     </main>;
 }
 
