@@ -18,6 +18,7 @@ function Search(props: SearchProps) {
         label={props.label}
         placeholder={props.placeholder}
         hideLabel
+        type={'search'}
         disabled={props.disabled}
         value={props.value}
         onModel={props.onModel}
