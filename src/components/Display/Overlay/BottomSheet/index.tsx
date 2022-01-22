@@ -50,6 +50,40 @@ export default function BottomSheet(props: Props) {
 
     const contentRef = useRef<HTMLDivElement | null>(null)
 
+    const close = useCallback(async (velocity = 0) => {
+        props.onModel &&
+            props.onModel(false)
+        await nextTick()
+
+        api.start({
+            y: breakpoint.isMobile ? height : undefined,
+            scale: breakpoint.isMobile ? undefined : scaleFrom,
+            opacity: breakpoint.isMobile ? undefined : 0,
+            immediate: false,
+            config: { ...config.stiff, velocity },
+            onStart: () => {
+                $transitionState('leave')
+                $entered(false)
+            },
+            onRest: () => {
+                $transitionState('afterleave')
+                props.onModel &&
+                    props.onModel(false)
+
+                $entered(false)
+
+                removeOverlayZIndex(rootRef, () => {
+                    !props.open && setZIndex("");
+
+                    requestAnimationFrame(() => {
+                        props.onAfterLeave && props.onAfterLeave()
+                    })
+                })
+            },
+        })
+    }, [breakpoint, height, props, api])
+
+
     // @ts-ignore
     const openSheet = useCallback(async ({ canceled, velocity = 0, friction = 22 }) => {
         const springConfig = breakpoint.isMobile ?
@@ -68,7 +102,12 @@ export default function BottomSheet(props: Props) {
         await nextTick()
 
         if (!entered) {
-            setOverlayZindex(rootRef, setZIndex)
+            setOverlayZindex({
+                rootRef,
+                setZIndex,
+                role: 'bottom-sheet',
+                close
+            })
         }
 
         // so we change the spring config to create a nice wobbly effect
@@ -97,42 +136,8 @@ export default function BottomSheet(props: Props) {
             },
         })
     }, [
-        transitionState, api, props, entered, breakpoint
+        transitionState, api, props, entered, breakpoint, close
     ])
-
-    const close = useCallback(async (velocity = 0) => {
-        props.onModel &&
-            props.onModel(false)
-        await nextTick()
-
-        api.start({
-            y: breakpoint.isMobile ? height : undefined,
-            scale: breakpoint.isMobile ? undefined : scaleFrom,
-            opacity: breakpoint.isMobile ? undefined : 0,
-            immediate: false,
-            config: { ...config.stiff, velocity },
-            onStart: () => {
-                $transitionState('leave')
-                $entered(false)
-            },
-            onRest: () => {
-                $transitionState('afterleave')
-                props.onModel &&
-                    props.onModel(false)
-
-                $entered(false)
-
-                removeOverlayZIndex(rootRef, () => {
-                    !props.open && setZIndex("");
-
-                    requestAnimationFrame(() => {
-                        props.onAfterLeave && props.onAfterLeave()
-                    })  
-                })
-            },
-        })
-    }, [breakpoint, height, props, api])
-
 
     useEffect(() => {
         const { open } = props;
