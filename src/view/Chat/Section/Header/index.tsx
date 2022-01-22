@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import Tooltip from '../../../../components/Display/Overlay/Tooltip';
 import { MoonIcon } from '../../../../components/Icon/Generic/Moon';
 import { SidebarToLeft } from '../../../../components/Icon/Generic/SidebarToLeft';
 import { SidebarToRight } from '../../../../components/Icon/Generic/SidebarToRight';
 import { SunIcon } from '../../../../components/Icon/Generic/Sun';
-import IconWrapper from '../../../../components/Icon/Logo/IconWrapper';
 import Button from '../../../../components/Inputs/Button/Button';
 import { className } from '../../../../components/utils/main';
 import useBreakpoint from '../../../../hooks/breakpoint';
@@ -18,9 +17,6 @@ function Header() {
     const [theme, toggleTheme] = useTheme();
 
     const [sidebar, toggleSidebar] = useChatAside();
-
-    // to avoid theme icon from fading on initial render
-    const [themeToggled, setThemeToggled] = useState(false);
 
     return <header
         className={
@@ -40,48 +36,47 @@ function Header() {
             <Favorite />
 
             <div className='gap-x-3 grid grid-flow-col'>
-                <Button
-                    icon
-                    disabled={sidebar.disabled}
-                    onClick={() => toggleSidebar({
-                        ...sidebar,
-                        visible: !sidebar.visible
-                    })}
-                    htmlTitle='Toggle sidebar'
-                    className={'text-lg'}
-                    iconSlot={
-                        sidebar.visible ?
-                            <SidebarToRight />
-                            : <SidebarToLeft />
-                    }
+                <Tooltip
+                    title='Toggle sidebar'
+                    activator={({ toggle, ref, events }) => {
+                        return <Button
+                            ref={ref}
+                            icon
+                            disabled={sidebar.disabled}
+                            {...events}
+                            onClick={() => toggleSidebar({
+                                ...sidebar,
+                                visible: !sidebar.visible
+                            })}
+                            className={'text-lg'}
+                            iconSlot={
+                                sidebar.visible ?
+                                    <SidebarToRight />
+                                    : <SidebarToLeft />
+                            }
+                        />
+                    }}
                 />
 
-                <Button
-                    icon
-                    onClick={() => {
-                        toggleTheme();
-                        setThemeToggled(true)
+                <Tooltip
+                    title='Toggle theme'
+                    activator={({ toggle, ref, events }) => {
+                        return <Button
+                            ref={ref}
+                            {...events}
+                            icon
+                            className='text-lg'
+                            onClick={() => {
+                                toggleTheme();
+                            }}
+                            iconSlot={
+                                theme.light ?
+                                    <SunIcon />
+                                    : <MoonIcon />
+                            }
+                        />
                     }}
-                    htmlTitle='Toggle theme'
-                >
-
-                    <IconWrapper
-                        key={theme.is}
-                        className={
-                            className([
-                                'text-lg',
-                                {
-                                    'fade-appear': themeToggled
-                                }
-                            ])
-                        }>
-                        {
-                            theme.light ?
-                                <SunIcon />
-                                : <MoonIcon />
-                        }
-                    </IconWrapper>
-                </Button>
+                />
             </div>
         </div>
 
