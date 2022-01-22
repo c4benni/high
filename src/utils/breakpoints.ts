@@ -109,13 +109,11 @@ function mounted(this: BreakpointWrapper, onChange?: Function) {
         event: "change",
         callback: async (e: MediaQueryListEvent) => {
           await nextTick();
-          requestAnimationFrame(() => {
-            updateBreakpointMediaListener.call(this, {
-              matches: e.matches,
-              index,
-              name,
-              onChange,
-            });
+          updateBreakpointMediaListener.call(this, {
+            matches: e.matches,
+            index,
+            name,
+            onChange,
           });
         },
       });
@@ -137,6 +135,8 @@ class BreakpointWrapper {
       mounted.call(this, onChange);
 
       Object.freeze(this);
+
+      installed = true;
     }
   }
 
