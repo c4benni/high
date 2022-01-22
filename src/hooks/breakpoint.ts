@@ -9,6 +9,8 @@ export interface BreakpointHook extends BreakpointOutput {
   isMobile?: boolean;
 }
 
+let installed = false;
+
 export default function useBreakpoint() {
   const breakpointState = useSelector(
     (state: RootState) => state.breakpointSlice
@@ -20,9 +22,7 @@ export default function useBreakpoint() {
     useState<BreakpointHook>(breakpointState);
 
   useEffect(() => {
-    if (!breakpointState.is) {
-      console.log("br not set well");
-      
+    if (!installed) {
       const updateBreakpoint = (br: BreakpointOutput) =>
         dispatch(setBreakpoint(br));
 
@@ -38,13 +38,14 @@ export default function useBreakpoint() {
         is: breakpoint.is,
         orientation: breakpoint.orientation,
       });
+
+      installed = true;
     }
 
     changeBreakpoint({
       ...breakpointState,
       isMobile: /xxs|xs|sm/.test(breakpointState.is),
     });
-
   }, [dispatch, breakpointState]);
 
   return [breakpoint] as const;
