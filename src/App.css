@@ -216,16 +216,48 @@ body {
 
 @keyframes fade-appear {
   from {
-    opacity: var(--appear-from, 0);
+    opacity: var(--fade-appear-from, 0);
   }
   to {
-    opacity: var(--appear-to);
+    opacity: var(--fade-appear-to);
   }
 }
 
 .fade-appear {
   animation: fade-appear var(--appear-duration, 150ms)
     var(--appear-ease, linear);
+  --fade-appear-to: 1;
+}
+
+@keyframes fade-slide-y-appear {
+  from {
+    transform: translate3d(0, var(--slide-y-appear-from, -100%), 0)
+  }
+  to {
+    transform: translate3d(0, var(--slide-y-appear-to, 0%), 0)
+  }
+}
+
+.fade-slide-y-appear {
+  animation: var(--appear-duration, 150ms)
+    var(--appear-ease, linear);
+  animation-name: fade-appear, fade-slide-y-appear;
+  --appear-to: 1;
+}
+
+@keyframes fade-slide-x-appear {
+  from {
+    transform: translate3d(var(--slide-x-appear-from, -100%), 0, 0)
+  }
+  to {
+    transform: translate3d(var(--slide-x-appear-to, 0%), 0, 0)
+  }
+}
+
+.fade-slide-x-appear {
+  animation: var(--appear-duration, 150ms)
+    var(--appear-ease, linear);
+  animation-name: fade-appear, fade-slide-x-appear;
   --appear-to: 1;
 }
 
