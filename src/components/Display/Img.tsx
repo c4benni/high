@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { Image, Placeholder, } from 'cloudinary-react';
 import { className, ClassName } from '../utils/main';
 
@@ -13,31 +13,41 @@ export type ImgProps = {
     [key: string]: any;
 }
 
-function Img(props: ImgProps) {
+const MemoizedImage = memo(({
+    props
+}: { props: ImgProps }) => {
     const [loaded, $loaded] = useState<Boolean | null>(false);
 
+    return <Image
+        {...props}
+        className={className([
+            {
+                invisible: loaded === false
+            },
+            props.className
+        ])}
+        // loading={props.loading}
+        quality={70}
+        decoding='async'
+        onLoad={() => {
+            $loaded(true)
+        }}
+        onError={() => {
+            $loaded(false)
+        }}
+    >
+        <Placeholder
+            type="predominant" />
+    </Image>
+}, (prev, next) => {
+    return JSON.stringify(prev.props) === JSON.stringify(next.props)
+})
+function Img(props: ImgProps) {
+
     return (
-        <Image
-            {...props}
-            className={className([
-                {
-                    invisible: loaded === false
-                },
-                props.className
-            ])}
-            loading={props.loading}
-            quality={70}
-            decoding='async'
-            onLoad={() => {
-                $loaded(true)
-            }}
-            onError={() => {
-                $loaded(false)
-            }}
-        >
-            <Placeholder
-                type="predominant" />
-        </Image>
+        <MemoizedImage
+            props={props}
+        />
     )
 }
 
