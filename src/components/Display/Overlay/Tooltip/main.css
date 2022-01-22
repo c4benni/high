@@ -1,0 +1,58 @@
+.Tooltip{
+    @apply text-sm bg-black text-gray-100 py-1 px-2 relative isolate whitespace-nowrap w-fit;
+    --border-radius: 4px;
+    border-radius: var(--border-radius);
+}
+
+.Tooltip.has-arrow::before{
+    @apply pointer-events-none;
+    background-color: inherit;
+}
+
+.Tooltip.has-arrow{
+    @apply before:absolute before:-z-1 before:rotate-45;
+    --size: 7px;
+    --half-size: calc(var(--size) / 2);
+    --arrow-position: calc(50% - var(--half-size));
+    --arrow-radius: 1.5px;
+}
+
+.Tooltip.has-arrow::before{
+    height: var(--size);
+    width: var(--size);
+    /* animation: linear 100ms; */
+}
+
+.Tooltip.has-arrow.arrow-bottom::before,
+.Tooltip.has-arrow.arrow-top::before{
+    left: var(--arrow-position);
+    /* animation-name: fade-appear, fade-slide-y-appear; */
+}
+
+.Tooltip.has-arrow.arrow-bottom::before{
+    bottom: calc(0px - var(--half-size));
+    border-bottom-right-radius: var(--arrow-radius);
+}
+
+.Tooltip.has-arrow.arrow-top::before{
+    top: calc(0px - var(--half-size));
+    border-top-left-radius: var(--arrow-radius);
+    /* --slide-y-appear-from: 100%; */
+}
+
+.Tooltip.has-arrow.arrow-right::before,
+.Tooltip.has-arrow.arrow-left::before{
+    top: var(--arrow-position);
+    /* animation-name: fade-appear, fade-slide-x-appear; */
+}
+
+.Tooltip.has-arrow.arrow-right::before{
+    right: calc(0px - var(--half-size));
+    border-top-right-radius: var(--arrow-radius);
+}
+
+.Tooltip.has-arrow.arrow-left::before{
+    left: calc(0px - var(--half-size));
+    border-bottom-left-radius: var(--arrow-radius);
+    /* --slide-x-appear-from: 100%; */
+}
