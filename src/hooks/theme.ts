@@ -4,6 +4,8 @@ import { setTheme, ThemeOption, ThemeSlice } from "../redux/slice/theme";
 import { RootState } from "../redux/store";
 import { mediaListener } from "../utils/main";
 
+let installed = false;
+
 export default function useTheme() {
   const dispatch = useDispatch();
 
@@ -13,7 +15,7 @@ export default function useTheme() {
 
   useEffect(() => {
     changeTheme(theme);
-    if (!theme.is) {
+    if (!installed) {
       const currentTheme: MediaQueryList = window.matchMedia(
         "(prefers-color-scheme: dark)"
       );
@@ -32,6 +34,8 @@ export default function useTheme() {
           } else dispatchTheme("light");
         },
       });
+
+      installed = true;
     }
   }, [theme, dispatch]);
 
