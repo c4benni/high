@@ -80,6 +80,16 @@ export const nextAnimFrame = (callback?: Function): Promise<void> => {
   );
 };
 
+export const sleep = (timeout: number, callback?: Function): Promise<void> => {
+  return new Promise((r) => {
+    const ref = setTimeout(() => {
+      r();
+      clearTimeout(ref);
+      callback && callback();
+    }, timeout);
+  });
+};
+
 export const nextTick = async (cb?: Function) => {
   if (typeof cb == "function") {
     await new Promise<void>((resolve) => {
@@ -131,3 +141,5 @@ export function isIOS() {
     (navigator.userAgent.includes("Mac") && "ontouchend" in document)
   );
 }
+
+export const uid = () => performance.now().toString(36).replace(/\./g, "-");
