@@ -25,7 +25,7 @@ function Nav() {
             <ul
                 className={
                     className([
-                        'grid grid-flow-col md:grid-flow-row h-full fill-before relative before:bg-primary-700 dark:before:bg-primary-600 before:transform-gpu before:transition-transform',
+                        'grid grid-flow-col md:grid-flow-row h-full fill-before relative before:bg-primary-700 dark:before:bg-primary-600 before:transform-gpu before:transition-transform active:before:scale-[0.975] pointer-events-none',
                         !breakpoint.isMobile ? [
                             'grid-rows-[repeat(3,auto),1fr] gap-y-4 py-6 before:h-[56px] before:left-auto before:-right-1 before:w-1 before:my-6 before:z-10 before:rounded-r-lg',
                             {
@@ -55,6 +55,7 @@ function Nav() {
                                 key={`link-${key}`}
                                 className={
                                     className([
+                                        'pointer-events-auto',
                                         {
                                             'h-[56px]': !breakpoint.isMobile
                                         }
