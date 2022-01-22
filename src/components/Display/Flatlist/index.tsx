@@ -1,4 +1,4 @@
-import React, { Fragment, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Fragment, memo, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { DynamicObject } from '../../utils/types';
 import { className as classes, ClassName } from '../../utils/main';
 import './main.css'
@@ -34,6 +34,29 @@ type GroupedSize = {
     count: number;
 }
 
+function Items({ data, eagerIndexes, render, range }: {
+    data: DynamicObject<any>[];
+    eagerIndexes?: number[];
+    render: (args: RenderArgs) => ReactNode;
+    range: Range
+}) {
+    return <>
+        {
+            data.map((item, key) => {
+                const eagerItem = eagerIndexes ? eagerIndexes.includes(key) : false;
+
+                return ((key >= range[0] && key <= range[1]) || eagerItem) ? render({
+                    data: item,
+                    key,
+                    style: {
+                        'gridRowStart': `${key + 1}`
+                    }
+                }) : null
+            })
+        }
+    </>
+}
+
 function FlatList(props: Props) {
     const rootRef = useRef<HTMLElement | null>(null);
 
@@ -45,22 +68,21 @@ function FlatList(props: Props) {
         bench = 1, eagerIndexes, gap
     } = props;
 
-    const Items = useMemo(() => {
-        return data.map((item, key) => {
-            const eagerItem = eagerIndexes ? eagerIndexes.includes(key) : false;
+    const MemoizedItems = memo(Items, (prev, next) => {
+        return prev.data.length !== next.data.length
+    })
 
-            return ((key >= range[0] && key <= range[1]) || eagerItem) ? render({
-                data: item,
-                key,
-                style: {
-                    'gridRowStart': `${key + 1}`
-                }
-            }) : null
-        })
-    }, [render, data, range, eagerIndexes])
+    const heightArray = useMemo(() => {
+        if (Array.isArray(itemSize)) {
+            return itemSize
+        }
+        return Array.from({
+            length: data.length
+        }, () => itemSize)
+    }, [data, itemSize])
 
     const getHeight = useMemo(() => {
-        const heightAsArray = Array.isArray(itemSize)
+        const heightAsArray = Array.isArray(itemSize);
 
         const reducedHeight = () => {
             const height = heightAsArray ?
@@ -74,20 +96,11 @@ function FlatList(props: Props) {
             return `${(height * data.length) + gapHeight}px`
         }
 
-        const heightArray = () => {
-            if (heightAsArray) {
-                return itemSize
-            }
-            return Array.from({
-                length: data.length
-            }, () => itemSize)
-        }
-
         return {
             reduced: reducedHeight(),
-            array: heightArray(),
+            array: heightArray,
         }
-    }, [itemSize, data, gap])
+    }, [itemSize, data, gap, heightArray])
 
     const scroller = useCallback((): HTMLElement | null => {
         if (typeof scrollingElement == 'string') {
@@ -186,8 +199,8 @@ function FlatList(props: Props) {
             }
 
             return groupedSize.map(val => `repeat(${val.count}, ${val.size}px)`).join(' ')
-        } return `repeat(${Items.length}, ${itemSize}px)`
-    }, [Items, itemSize])
+        } return `repeat(${data.length}, ${itemSize}px)`
+    }, [data, itemSize])
 
     useEffect(() => {
         const scrollTarget = scroller();
@@ -229,7 +242,14 @@ function FlatList(props: Props) {
     }, [
         <Fragment
             key={'root-frag'}
-        >{Items}</Fragment>
+        >{
+                <MemoizedItems
+                    render={render}
+                    eagerIndexes={eagerIndexes}
+                    data={data}
+                    range={range}
+                />
+            }</Fragment>
     ])
 }
 
