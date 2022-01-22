@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import InfoDialog from '../../../../components/Display/Overlay/Dialog/InfoDialog';
+import Tooltip from '../../../../components/Display/Overlay/Tooltip';
 import { HashIcon } from '../../../../components/Icon/Generic/Hash';
 import { HorizontalDots } from '../../../../components/Icon/Generic/HorizontalDots';
 import { InviteIcon } from '../../../../components/Icon/Generic/Invite';
@@ -39,7 +40,7 @@ function Heading() {
             <InfoDialog
                 open={dialog}
                 onToggle={setDialog}
-                title={title}
+                title={`#${title}`}
             >
                 {subtitle}
             </InfoDialog>
@@ -48,21 +49,33 @@ function Heading() {
         <div
             className='ml-3'
         >
-            <Button
-                icon
-                htmlTitle='Send an invite'
-                iconSlot={
-                    <InviteIcon />
-                }
-                className={'mr-2'}
+            <Tooltip
+                title='Send an invite'
+                activator={({ toggle, ref, events }) => {
+                    return <Button
+                        ref={ref}
+                        {...events}
+                        icon
+                        iconSlot={
+                            <InviteIcon />
+                        }
+                        className={'mr-2'}
+                    />
+                }}
             />
 
-            <Button
-                icon
-                htmlTitle='More'
-                iconSlot={
-                    <HorizontalDots />
-                }
+            <Tooltip
+                title='More'
+                activator={({ toggle, ref, events }) => {
+                    return <Button
+                        ref={ref}
+                        {...events}
+                        icon
+                        iconSlot={
+                            <HorizontalDots />
+                        }
+                    />
+                }}
             />
         </div>
     </div>
