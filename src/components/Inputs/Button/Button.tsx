@@ -1,4 +1,7 @@
-import React, { Fragment } from 'react';
+import React, {
+    ForwardedRef, forwardRef, Fragment,
+    PropsWithChildren, useMemo
+} from 'react';
 import AppLoader from '../../Display/Loader';
 import IconWrapper from '../../Icon/Logo/IconWrapper';
 import { ClassName, className } from '../../utils/main';
@@ -31,21 +34,26 @@ type ButtonProps = {
     onClick?: Function;
 }
 
-function Button(props: ButtonProps) {
+function Button(props: ButtonProps, ref: ForwardedRef<PropsWithChildren<ButtonProps>>) {
 
     const tag = props.tag || 'button'
 
-    const events = {} as { [key: string]: any };
+    const events = useMemo(() => {
+        const output = {} as { [key: string]: any };
 
-    for (const key in props) {
-        if (/^on[A-Z]/.test(key)) {
-            events[key] = props[key]
+        for (const key in props) {
+            if (/^on[A-Z]/.test(key)) {
+                output[key] = props[key]
+            }
         }
-    }
+
+        return output
+    }, [props])
 
     return (
         React.createElement(tag, {
             ...events,
+            ref,
             title: props.htmlTitle,
             tabIndex:
                 props.disabled ? '-1' : !/button|a/.test(tag) ? '0' : undefined,
@@ -63,7 +71,7 @@ function Button(props: ButtonProps) {
                     !props.link
                         ? [
                             'fill-before',
-                            props.size,
+                            props.size || 'md',
                             {
                                 icon: props.icon,
                                 primary: props.primary && !props.outlined,
@@ -114,8 +122,4 @@ function Button(props: ButtonProps) {
     );
 }
 
-Button.defaultProps = {
-    size: 'md',
-}
-
-export default Button;
+export default forwardRef(Button);
