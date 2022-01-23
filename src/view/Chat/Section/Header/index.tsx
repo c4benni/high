@@ -23,7 +23,7 @@ function Header() {
             className([
                 'grid grid-flow-col justify-between z-10',
                 breakpoint.isMobile ? [] : [
-                    'h-[48px] fixed top-0 w-[calc(100%-316px)] right-0 bg-inherit border-b chat-divide-color grid-cols-[1fr,240px]'
+                    'h-[48px] fixed top-0 w-[calc(100%-316px)] right-0 bg-inherit border-b chat-border-color grid-cols-[1fr,240px]'
                 ]
             ])
         }
