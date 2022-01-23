@@ -1,0 +1,7 @@
+.ChatBubble{
+    @apply grid;
+}
+
+.Bubble{
+    @apply py-2 px-4 relative isolate grid items-center min-w-[1rem] h-fit whitespace-pre-wrap select-text max-w-[65%] xs:max-w-[70%] md:max-w-[65%];
+}
