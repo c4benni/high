@@ -1,11 +1,11 @@
 .Tooltip{
-    @apply text-sm bg-black text-gray-100 py-1 px-2 relative isolate whitespace-nowrap w-fit;
+    @apply text-sm bg-black text-gray-100 py-1 px-2 relative isolate whitespace-nowrap w-fit dark:border dark:border-gray-800;
     --border-radius: 4px;
     border-radius: var(--border-radius);
 }
 
 .Tooltip.has-arrow::before{
-    @apply pointer-events-none;
+    @apply pointer-events-none dark:border-gray-800;
     background-color: inherit;
 }
 
@@ -35,6 +35,7 @@
 }
 
 .Tooltip.has-arrow.arrow-top::before{
+    @apply dark:border-l dark:border-t;
     top: calc(0px - var(--half-size));
     border-top-left-radius: var(--arrow-radius);
     /* --slide-y-appear-from: 100%; */
