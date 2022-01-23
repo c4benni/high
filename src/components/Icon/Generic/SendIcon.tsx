@@ -2,6 +2,6 @@ import { SVGProps } from "react";
 
 export function SendIcon(props: SVGProps<SVGSVGElement>) {
     return (
-        <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}><g fill="none"><path d="M12.815 12.197l-7.532 1.255a.5.5 0 0 0-.386.318L2.3 20.728c-.248.64.421 1.25 1.035.942l18-9a.75.75 0 0 0 0-1.341l-18-9c-.614-.307-1.283.303-1.035.942l2.598 6.958a.5.5 0 0 0 .386.318l7.532 1.255a.2.2 0 0 1 0 .395z" fill="currentColor"></path></g></svg>
+        <svg width="1em" height="1em" viewBox="0 0 16 16" {...props}><g fill="currentColor"><path fillRule="evenodd" d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26l.001.002l4.995 3.178l3.178 4.995l.002.002l.26.41a.5.5 0 0 0 .886-.083l6-15zm-1.833 1.89l.471-1.178l-1.178.471L5.93 9.363l.338.215a.5.5 0 0 1 .154.154l.215.338l7.494-7.494z"></path></g></svg>
     )
 }
