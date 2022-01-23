@@ -19,3 +19,7 @@
     border-radius: inherit;
     @apply h-[inherit] border border-gray-300 dark:border-gray-700 border-opacity-70 ring-offset-2 ring-offset-white dark:ring-offset-black ring-primary-700 dark:ring-primary-500 focus:ring-[2px] px-2 bg-white dark:bg-gray-800 w-full placeholder:select-none;
 }
+
+.TextField.textarea{
+    @apply h-[38px] md:h-[42px] pt-2
+}

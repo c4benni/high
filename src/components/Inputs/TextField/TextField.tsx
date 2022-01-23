@@ -1,4 +1,4 @@
-import React, { createElement, FormEvent, useEffect, useState } from 'react';
+import React, { createElement, FormEvent, useEffect, useMemo, useState } from 'react';
 import { uid } from '../../../utils/main';
 import { ClassName, className } from '../../utils/main';
 import { Slot } from '../../utils/types';
@@ -29,6 +29,10 @@ type PropType = {
 function TextField(props: PropType) {
 
     const [id, setUid] = useState('')
+
+    const { type } = props;
+
+    const isTextarea = useMemo(() => type === 'textarea', [type])
 
     useEffect(() => {
         setUid(`i-${uid()}`)
@@ -78,8 +82,8 @@ function TextField(props: PropType) {
                     props.prepend
                 }
                 {
-                    createElement(props.type === 'textarea' ? 'textarea' : 'input', {
-                        type: props.type !== 'textarea' ? props.type : undefined,
+                    createElement(isTextarea ? 'textarea' : 'input', {
+                        type: !isTextarea ? props.type : undefined,
                         placeholder: props.placeholder,
                         value: props.value,
                         id,
@@ -87,7 +91,10 @@ function TextField(props: PropType) {
                         onInput,
                         className:
                             className([
-                            "TextField",
+                                "TextField",
+                                {
+                                    textarea: isTextarea
+                                },
                             props.inputClassName || ''
                         ])
 
