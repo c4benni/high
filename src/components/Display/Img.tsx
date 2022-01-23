@@ -39,8 +39,6 @@ const MemoizedImage = memo(({
         <Placeholder
             type="predominant" />
     </Image>
-}, (prev, next) => {
-    return JSON.stringify(prev.props) === JSON.stringify(next.props)
 })
 function Img(props: ImgProps) {
 
