@@ -192,7 +192,7 @@ textarea {
 }
 
 html {
-  font-family: "Alegreya Sans", sans-serif !important;
+  font-family: "Source Sans Pro", sans-serif !important;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
@@ -370,7 +370,7 @@ svg,
   @apply border-gray-200 dark:border-gray-700;
 }
 
-.chat-divide-color {
+.chat-border-color {
   @apply border-gray-200 dark:border-gray-900;
 }
 
@@ -396,8 +396,16 @@ svg,
   background: inherit;
 }
 
+.bg-current {
+  background: currentColor;
+}
+
 .before\:bg-\[inherit\]::before {
   background: inherit;
+}
+
+.before\:bg-current::before {
+  background: currentColor;
 }
 
 .show-scrollbar-on-hover:not(:hover)::-webkit-scrollbar-corner,
