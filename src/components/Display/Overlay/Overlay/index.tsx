@@ -27,7 +27,7 @@ type Props = {
     duration?: TransitionDuration;
     className?: ClassName;
     style?: object;
-    dialogAttrs?: object;
+    overlayAttrs?: object;
     backdropOpacity?: number;
     renderBackdrop?: boolean;
     lockBodyScroll?: boolean;
@@ -36,15 +36,16 @@ type Props = {
     onExit?: (el: HTMLElement | null) => void;
     onExited?: (el: HTMLElement | null) => void;
     role?: React.AriaRole | undefined;
-    awayListeners?: string[]
+    awayListeners?: string[],
+    backdropBackground?: string
 }
 
 function Overlay(props: Props) {
 
     const {
         open, onToggle, duration, backdropOpacity, style, role,
-        awayListeners = ['click'],
-        className, children, dialogAttrs, renderBackdrop, lockBodyScroll
+        awayListeners = ['click'], backdropBackground,
+        className, children, overlayAttrs, renderBackdrop, lockBodyScroll
     } = props;
 
     const [mounted, setMounted] = useState(false);
@@ -149,6 +150,7 @@ function Overlay(props: Props) {
                         duration={getDuration}
                         onToggle={onToggle}
                         opacity={backdropOpacity}
+                        background={backdropBackground}
                     />
                     : null
             }
@@ -226,7 +228,7 @@ function Overlay(props: Props) {
                         !isTooltip &&
                             trapFocus(e, close, rootRef)
                     }}
-                    {...(dialogAttrs || {})}
+                    {...(overlayAttrs || {})}
                 >
                     {children}
                 </div>
