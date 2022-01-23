@@ -10,3 +10,20 @@ export type ImgProps = {
 export type DynamicObject<T> = {
   [key: string]: T;
 };
+
+export type ReactionType =
+  | "shy"
+  | "love"
+  | "laugh"
+  | "thumbs up"
+  | "thumbs down"
+  | "question"
+  | "exclaim"
+  | "";
+
+export type ReactionEmoji = "🙈" | "❤" | "😂" | "👍" | "👎" | "❓" | "‼" | "";
+
+export type GetReaction = {
+  title: string;
+  emoji: ReactionEmoji;
+};
