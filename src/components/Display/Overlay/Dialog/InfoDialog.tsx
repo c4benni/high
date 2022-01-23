@@ -22,7 +22,7 @@ function InfoDialog(props: Props) {
         open={open}
         onToggle={onToggle}
         className={'rounded-md max-w-[92.5vw] sm:max-w-sm md:max-w-md min-h-[180px] md:min-h-[200px] bg-white dark:bg-gray-800 shadow-2xl dark:shadow-none dark:border default-border-color border-opacity-0 dark:border-opacity-40'}
-        dialogAttrs={{
+        overlayAttrs={{
             'aria-labelledby': id
         }}
     >
