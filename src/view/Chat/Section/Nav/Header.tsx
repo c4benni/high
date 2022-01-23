@@ -13,7 +13,7 @@ function Header(props: Props) {
     return <header
         className={
             className([
-                'h-[56px] md:h-[48px] bg-inherit border-b chat-divide-color px-3 grid items-center',
+                'h-[56px] md:h-[48px] border-b chat-border-color px-3 grid items-center bg-white dark:bg-true-gray-800',
             ])
         }
     >
