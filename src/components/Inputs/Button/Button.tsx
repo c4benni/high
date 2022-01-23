@@ -16,6 +16,7 @@ type ButtonProps = {
     iconSlot?: Slot;
     disabled?: boolean;
     type?: string;
+    role?: string;
     tag?: string;
     outlined?: boolean;
     htmlTitle?: string;
@@ -50,14 +51,18 @@ function Button(props: ButtonProps, ref: ForwardedRef<PropsWithChildren<ButtonPr
         return output
     }, [props])
 
+    const isButton = useMemo(() => /button|a/.test(tag), [tag])
+
     return (
         React.createElement(tag, {
             ...events,
             ref,
             title: props.htmlTitle,
             tabIndex:
-                props.disabled ? '-1' : !/button|a/.test(tag) ? '0' : undefined,
+                props.disabled ? '-1' : !isButton ? '0' : undefined,
             disabled: props.disabled,
+            type: props.type,
+            role: props.role || (!isButton ? 'button' : undefined),
             className: className(
                 [
                     'Button',
@@ -66,7 +71,7 @@ function Button(props: ButtonProps, ref: ForwardedRef<PropsWithChildren<ButtonPr
                         'filled': !props.link,
                         'grid w-full': props.block,
                         'outlined fill-after': props.outlined,
-                        'opacity-60 disabled cursor-not-allowed before:invisible after:invisible grayscale': props.disabled
+                        'opacity-40 disabled cursor-not-allowed before:hidden after:hidden grayscale dark:brightness-[0.60] brightness-[1.4]': props.disabled
                     },
                     !props.link
                         ? [

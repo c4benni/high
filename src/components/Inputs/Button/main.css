@@ -8,7 +8,7 @@
     @apply hover:before:opacity-5;
   }
 
-  .Button.primary{
+  .Button.primary:not(.disabled){
     @apply hover:bg-primary-800 dark:hover:bg-primary-600
   }
 
@@ -20,7 +20,7 @@
     @apply hover:after:translate-x-0 hover:after:opacity-70 
   }
 
-  .Button.icon{
+  .Button.icon:not(.disabled){
     @apply hover:opacity-90
   }
 }
@@ -42,7 +42,7 @@
 }
 
 .Button.filled{
-  @apply before:-z-[1] before:transition-opacity before:opacity-0 active:before:opacity-10;
+  @apply before:-z-1 before:transition-opacity before:opacity-0 active:before:opacity-10;
 }
 
 .Button.active-scale-x{
