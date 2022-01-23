@@ -41,7 +41,9 @@ function Backdrop(props: Props) {
             style={{
                 // @ts-ignore
                 '--fade-duration': `${duration + 16}ms`,
-                opacity 
+                '--fade-enter-to': opacity,
+                '--fade-exit-from': opacity,
+                opacity,
             }}
         />
     </CSSTransition>
