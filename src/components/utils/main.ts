@@ -1,8 +1,10 @@
+import { GetReaction, ReactionType } from "./types";
+
 export type ClassName = string | object | ClassName[];
 
 export function className(arg: ClassName): string {
   if (typeof arg == "string") {
-    return arg.trim();
+    return arg.trim().replace(/\s+/, " ");
   }
 
   const isArray = Array.isArray(arg);
@@ -13,7 +15,8 @@ export function className(arg: ClassName): string {
     validClassName
       .filter((item, index) => validClassName.indexOf(item) === index)
       .join(" ")
-      .trim();
+      .trim()
+      .replace(/\s+/, " ");
 
   if (typeof arg == "object" && !isArray) {
     const entries = Object.entries(arg);
@@ -42,4 +45,49 @@ export function className(arg: ClassName): string {
   }
 
   return "";
+}
+
+export function getReaction(str: ReactionType): GetReaction {
+  switch (str) {
+    case "exclaim":
+      return {
+        title: "Exclaimation mark",
+        emoji: "‼",
+      };
+    case "laugh":
+      return {
+        title: "Laughing face",
+        emoji: "😂",
+      };
+    case "love":
+      return {
+        title: "Red heart",
+        emoji: "❤",
+      };
+    case "question":
+      return {
+        title: "Question mark",
+        emoji: "❓",
+      };
+    case "shy":
+      return {
+        title: "Shy monkey",
+        emoji: "🙈",
+      };
+    case "thumbs down":
+      return {
+        title: "Thumbs down",
+        emoji: "👎",
+      };
+    case "thumbs up":
+      return {
+        title: "Thumbs up",
+        emoji: "👍",
+      };
+    default:
+      return {
+        title: "No reaction",
+        emoji: "",
+      };
+  }
 }
