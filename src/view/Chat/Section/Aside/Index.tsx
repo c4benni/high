@@ -18,7 +18,7 @@ function Aside(props: Props) {
             className([
                 breakpoint.isMobile ? [] : [
                     classNames.largeSideBars,
-                    'border-l chat-divide-color mt-[48px] overflow-y-auto max-h-[calc(100vh-48px)] show-scrollbar-on-hover relative isolate'
+                    'border-l chat-border-color mt-[48px] overflow-y-auto max-h-[calc(100vh-48px)] show-scrollbar-on-hover relative isolate'
                 ],
                 props.className
             ])
