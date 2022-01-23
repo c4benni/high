@@ -15,7 +15,7 @@ function Nav() {
             className([
                 breakpoint.isMobile ? [] : [
                     classNames.largeSideBars,
-                    'border-r chat-divide-color'
+                    'border-r chat-border-color'
                 ]
             ])
         }
