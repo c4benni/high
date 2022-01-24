@@ -10,10 +10,11 @@ import Tooltip from '../Overlay/Tooltip';
 type Props = {
     sender: boolean;
     onSetReaction: (reaction: ReactionType) => void;
+    hasReaction: boolean;
 }
 
 function ChatActions(props: Props) {
-    const { sender, onSetReaction } = props;
+    const { sender, onSetReaction, hasReaction } = props;
 
     const [breakpoint] = useBreakpoint();
 
@@ -23,7 +24,7 @@ function ChatActions(props: Props) {
         return [{
             title: 'Reaction',
             icon: <ReactionIcon />,
-            onClick: () => onSetReaction('laugh')
+            onClick: () => onSetReaction('exclaim')
         },
         {
             title: 'More',
@@ -34,12 +35,16 @@ function ChatActions(props: Props) {
     return <div
         className={
             className([
-                'flex w-fit items-end mb-1 ChatAction opacity-0 group-hover:opacity-100 group-focus-within:opacity-100',
+                'flex w-fit items-end mb-1 ChatAction opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-transform transform-gpu',
                 {
                     'mr-2 order-1': sender,
                     'ml-2 order-2': !sender,
-                    'flex-col-reverse': xxs
-                }
+                    'flex-col-reverse': xxs,
+                },
+                !hasReaction ? {
+                    'translate-x-[30px]': sender,
+                    'translate-x-[-30px]': !sender
+                } : ''
             ])
         }
     >
@@ -57,7 +62,7 @@ function ChatActions(props: Props) {
                                 action.icon
                             }
                             className={{
-                                'mr-2': key === 0 && !xxs,
+                                'mr-2 h-16 w-[120px]': key === 0 && !xxs,
                                 'mt-2': key === 0 && xxs
                             }}
                             onClick={action.onClick}
