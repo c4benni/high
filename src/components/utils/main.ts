@@ -1,4 +1,9 @@
-import { GetReaction, ReactionType } from "./types";
+import {
+  ComponentData,
+  DynamicObject,
+  GetReaction,
+  ReactionType,
+} from "./types";
 
 export type ClassName = string | object | ClassName[];
 
@@ -90,4 +95,23 @@ export function getReaction(str: ReactionType): GetReaction {
         emoji: "",
       };
   }
+}
+
+export function getComponentData(props: DynamicObject<any>): ComponentData {
+  const output = {
+    events: {},
+    attrs: {},
+  } as { [key: string]: any };
+
+  for (const key in props) {
+    const value = props[key];
+
+    if (/^on[A-Z]/.test(key)) {
+      typeof value == "function" && (output.events[key] = value);
+    } else if (typeof value == "string") {
+      output.attrs[key] = value;
+    }
+  }
+
+  return output;
 }
