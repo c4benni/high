@@ -27,3 +27,18 @@ export type GetReaction = {
   title: string;
   emoji: ReactionEmoji;
 };
+
+export type ComponentData = {
+  events?: {
+    [key: string]: Function;
+  };
+  attrs?: {
+    [key: string]: string;
+  };
+};
+
+export type SetState<T> = (value: React.SetStateAction<T>) => void;
+
+export type UndefinedOr<T> = T | undefined;
+
+export type NullOr<T> = T | null;
