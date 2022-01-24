@@ -417,3 +417,7 @@ svg,
 #ui-overlay{
   display: inline;
 }
+
+.transition-slow{
+  transition-duration: 300ms !important;
+}
