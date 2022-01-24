@@ -51,10 +51,11 @@ function Heading() {
         >
             <Tooltip
                 title='Send an invite'
-                activator={({ toggle, ref, events }) => {
+                activator={({ toggle, ref, events, attrs }) => {
                     return <Button
                         ref={ref}
                         {...events}
+                        {...attrs}
                         icon
                         iconSlot={
                             <InviteIcon />
@@ -66,10 +67,11 @@ function Heading() {
 
             <Tooltip
                 title='More'
-                activator={({ toggle, ref, events }) => {
+                activator={({ attrs, ref, events }) => {
                     return <Button
                         ref={ref}
                         {...events}
+                        {...attrs}
                         icon
                         iconSlot={
                             <HorizontalDots />
