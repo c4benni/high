@@ -13,7 +13,7 @@
     @apply before:absolute before:-z-1 before:rotate-45;
     --size: 7px;
     --half-size: calc(var(--size) / 2);
-    --arrow-position: calc(50% - var(--half-size));
+    --arrow-position: calc(50% - var(--half-size) + var(--reposition-arrow, 0px));
     --arrow-radius: 1.5px;
 }
 
@@ -35,10 +35,24 @@
 }
 
 .Tooltip.has-arrow.arrow-top::before{
-    @apply dark:border-l dark:border-t;
+    @apply dark:border-t dark:border-l;
+}
+
+.Tooltip.has-arrow.arrow-right::before{
+    @apply dark:border-r dark:border-t;
+}
+
+.Tooltip.has-arrow.arrow-bottom::before{
+    @apply dark:border-r dark:border-b;
+}
+
+.Tooltip.has-arrow.arrow-left::before{
+    @apply dark:border-l dark:border-b;
+}
+
+.Tooltip.has-arrow.arrow-top::before{
     top: calc(0px - var(--half-size));
     border-top-left-radius: var(--arrow-radius);
-    /* --slide-y-appear-from: 100%; */
 }
 
 .Tooltip.has-arrow.arrow-right::before,

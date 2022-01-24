@@ -1,9 +1,11 @@
 import React, { ReactNode, useMemo, useState } from 'react';
 import { className as classes } from '../../../utils/main';
 import { eventKey } from '../../../../utils/eventKey';
-import { Slot } from '../../../utils/types';
+import { DynamicObject, Slot } from '../../../utils/types';
 import Reposition from '../Reposition';
 import './main.css'
+import { OverlayPosition } from '../Reposition/utils/types';
+import { styeArrow } from '../Reposition/utils';
 
 type Toggle = (open: boolean) => void
 
@@ -25,9 +27,8 @@ export type TooltipActivatorArgs = {
     toggle: Toggle;
     active?: boolean;
     events?: TooltipActivatorEvents;
+    attrs?: DynamicObject<string | undefined>;
 }
-
-export type OverlayPosition = 'top' | 'right' | 'bottom' | 'left';
 
 type Props = {
     activator: (arg: TooltipActivatorArgs) => ReactNode;
@@ -38,7 +39,8 @@ type Props = {
     hideArrow?: boolean;
     offset?: number;
     title?: string;
-    delay?: number
+    delay?: number;
+    arrowSize?: number
 }
 
 // on open,
@@ -50,26 +52,21 @@ type Props = {
 function Tooltip(props: Props) {
     const {
         children, activator, open,
-        onToggle, position = 'bottom',
+        onToggle, position = 'bottom', arrowSize,
         hideArrow, offset = 8, title, delay = 200
     } = props;
 
+    const [arrowPosition, setArrowPosition] =
+        useState<OverlayPosition>('none');
 
-    const getArrowPosition: OverlayPosition = useMemo(() => {
-        if (position === 'top') {
-            return 'bottom'
-        }
-        if (position === 'right') {
-            return 'left'
-        }
-        if (position === 'bottom') {
-            return 'top'
-        }
-        return 'right'
-    }, [position])
+    const [arrowAdjust, setArrowAdjust] = useState<number | null>(0);
 
-    const [arrowPosition] =
-        useState<OverlayPosition>(getArrowPosition)
+    const Arrow = useMemo(() => styeArrow(
+        !hideArrow,
+        arrowPosition,
+        arrowAdjust,
+        arrowSize
+    ), [hideArrow, arrowPosition, arrowAdjust, arrowSize])
 
     return <Reposition
         activator={(arg) => {
@@ -96,6 +93,9 @@ function Tooltip(props: Props) {
             return activator({
                 ...arg,
                 events,
+                attrs: {
+                    'aria-label': title || undefined
+                }
             })
         }}
         delay={delay}
@@ -115,27 +115,33 @@ function Tooltip(props: Props) {
             enter: 150,
             leave: 100
         }}
+        onArrowPosition={setArrowPosition}
+        onArrowAdjust={setArrowAdjust}
+        align='start'
     >
         {({ active }) => {
             return <div
                 className={
                     classes([
-                        'Tooltip has-arrow',
+                        'Tooltip',
                         {
                             invisible: !active
                         },
-                        !hideArrow ?
-                            [
-                                'has-arrow',
-                                `arrow-${arrowPosition}`
-                            ] : undefined
+                        ...Arrow.class
                     ])
                 }
+                style={{
+                    ...Arrow.style
+                }}
             >
                 {children || title}
             </div>
         }}
     </Reposition>
+}
+
+Tooltip.defaultProps = {
+    arrowSize: 7
 }
 
 export default Tooltip;
