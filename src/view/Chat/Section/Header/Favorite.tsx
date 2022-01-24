@@ -8,10 +8,11 @@ function Favorite() {
 
     return <Tooltip
         title='Add to Favorite'
-        activator={({ ref, events }) => {
+        activator={({ ref, events, attrs }) => {
             return <Button
                 ref={ref}
                 {...events}
+                {...attrs}
                 icon
                 className={{
                     'text-warning-500': state,
