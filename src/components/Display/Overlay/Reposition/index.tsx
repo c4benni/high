@@ -1,11 +1,12 @@
 import React, { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { nextAnimFrame, nextTick, sleep } from '../../../../utils/main';
+import { nextAnimFrame } from '../../../../utils/main';
 import { Slot } from '../../../utils/types';
 import Overlay, { TransitionDuration } from '../Overlay';
+import { onEntered } from './utils';
+import setPosition from './utils/setPosition';
+import { BoundRect, OverlayAlign, OverlayPosition, Position } from './utils/types';
 
 type Toggle = (open: boolean) => void
-
-type Position = { top: number, left: number }
 
 type SlotArgs = {
     toggle: Toggle;
@@ -16,17 +17,6 @@ export interface RepositionArg extends SlotArgs {
     ref: React.MutableRefObject<null>;
 }
 
-export type OverlayPosition = 'top' | 'right' | 'bottom' | 'left';
-
-type BoundRect = {
-    width: number;
-    height: number;
-    left: number;
-    top: number;
-    right: number;
-    bottom: number;
-}
-
 type Props = {
     activator: (arg: RepositionArg) => ReactNode;
     children?: Slot | ((arg: SlotArgs) => Slot);
@@ -34,6 +24,7 @@ type Props = {
     onToggle?: Toggle;
     position?: OverlayPosition;
     hideArrow?: boolean;
+    arrowSize?: number;
     offset?: number;
     // default delay = 200
     delay?: number;
@@ -41,7 +32,10 @@ type Props = {
     awayListeners?: string[];
     renderBackdrop?: boolean;
     lockBodyScroll?: boolean;
-    transitionDuration: TransitionDuration
+    transitionDuration: TransitionDuration;
+    onArrowPosition?: (position: OverlayPosition) => void;
+    onArrowAdjust?: (offset: number | null) => void;
+    align?: OverlayAlign
 }
 
 // on open,
@@ -56,8 +50,10 @@ function Reposition(props: Props) {
     const [mounted, setMounted] = useState(false);
 
     const {
-        children, activator, open, awayListeners = [], lockBodyScroll,
-        onToggle, offset = 8, delay, role, renderBackdrop, transitionDuration
+        children, activator, open, awayListeners = [],
+        lockBodyScroll, position, onToggle, offset = 8,
+        delay, role, renderBackdrop, transitionDuration,
+        onArrowPosition, onArrowAdjust, arrowSize, align
     } = props;
 
     const [selfOpen, setSelfOpen] = useState(open || false);
@@ -103,46 +99,39 @@ function Reposition(props: Props) {
 
     const [inset, setInset] = useState<Position | null>(null)
 
-    const positionTooltip = useCallback(async () => {
-        await nextTick();
+    const [transformOrigin, setTransformOrigin] = useState<OverlayPosition | undefined>()
 
-        if (!activatorRef.current || !getOpen || !mounted) { return }
+    const positionOverlay = useCallback(async () => {
 
-        if (!psuedoOpen && !contentBound) {
-            setPsuedoOpen(true);
-
-            setPseudoDuration(1);
-        }
-
-        const activator: HTMLElement = activatorRef.current;
-
-        if (activator && contentBound) {
-
-            const { left, bottom, width, } =
-                activator.getBoundingClientRect();
-
-            const getLeft = (left - (contentBound.width / 2)) + (width / 2);
-
-            const getTop = (bottom + offset)
-
-            setInset({
-                left: getLeft, top: getTop
-            })
-
-            await nextAnimFrame()
-
-            if (!mounted) { return }
-
-            setShowOverlay(true)
-        }
-    }, [contentBound, psuedoOpen, offset, getOpen, mounted])
+        await setPosition({
+            contentBound,
+            psuedoOpen,
+            offset,
+            getOpen,
+            mounted,
+            activatorRef,
+            position,
+            arrowSize,
+            align,
+            setPsuedoOpen,
+            setPseudoDuration,
+            setInset,
+            setShowOverlay,
+            onArrowPosition,
+            onArrowAdjust,
+            setTransformOrigin,
+        })
+    }, [
+        contentBound, psuedoOpen, offset, getOpen, arrowSize,
+        mounted, position, onArrowPosition, onArrowAdjust, align
+    ])
 
     useEffect(() => {
         setMounted(true);
 
         if (getOpen) {
             setInset(null)
-            positionTooltip()
+            positionOverlay()
         } else {
             setShowOverlay(false)
             setContentBound(null)
@@ -150,7 +139,7 @@ function Reposition(props: Props) {
 
         return () =>
             setMounted(false);
-    }, [getOpen, positionTooltip])
+    }, [getOpen, positionOverlay])
 
     return <>
         {
@@ -175,23 +164,11 @@ function Reposition(props: Props) {
             lockBodyScroll={lockBodyScroll}
             role={role}
             duration={pseudoDuration || transitionDuration}
-            onEntered={async (el) => {
-                if (!contentBound && el instanceof HTMLElement) {
-                    const { top, right, bottom, left, width, height }
-                        = el.getBoundingClientRect()
-
-                    await sleep(typeof delay == 'number' ? delay : 200)
-
-                    if (getOpen) {
-                        setContentBound({
-                            top, right, bottom, left, width, height
-                        })
-
-                        setPsuedoOpen(false)
-
-                        setPseudoDuration(undefined);
-                    }
-                }
+            transformOrigin={transformOrigin}
+            onEntered={async (el: HTMLElement | null) => {
+                await onEntered({
+                    el, contentBound, delay, getOpen, setContentBound, setPseudoDuration, setPsuedoOpen
+                })
             }}
             awayListeners={!inset ? [] : awayListeners}
         >
@@ -209,8 +186,10 @@ function Reposition(props: Props) {
 
 Reposition.defaultProps = {
     offset: 8,
+    arrowSize: 7,
     lockBodyScroll: true,
-    renderBackdrop: false
+    renderBackdrop: false,
+    position: 'top'
 }
 
 export default Reposition;
