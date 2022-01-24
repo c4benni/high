@@ -36,10 +36,8 @@ export function setOverlayZindex(arg: {
       );
 
       if (sameOverlays.length) {
-        const wrapper = document.getElementById("ui-overlay") || document.body;
-
         sameOverlays.forEach((id) => {
-          const overlay: OverlayRootEl | null = wrapper.querySelector(`#${id}`);
+          const overlay = document.getElementById(id) as OverlayRootEl | null;
 
           overlay && overlay._close?.();
         });
@@ -139,11 +137,8 @@ export function restoreFocus(
 
   // check if there's a previous overlay and focus on it;
   if (previousOverlayId) {
-    const overlayRoot = document.getElementById("ui-overlay") || document.body;
-
-    const previousOverlayEl: HTMLElement | null = overlayRoot.querySelector(
-      `#${previousOverlayId}`
-    );
+    const previousOverlayEl: HTMLElement | null =
+      document.getElementById(previousOverlayId);
 
     if (previousOverlayEl) {
       const controlledFocus = new ControlledFocus({
