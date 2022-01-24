@@ -38,10 +38,11 @@ function Header() {
             <div className='gap-x-3 grid grid-flow-col'>
                 <Tooltip
                     title='Toggle sidebar'
-                    activator={({ toggle, ref, events }) => {
+                    activator={({ ref, events, attrs }) => {
                         return <Button
                             ref={ref}
                             icon
+                            {...attrs}
                             disabled={sidebar.disabled}
                             {...events}
                             onClick={() => toggleSidebar({
@@ -60,10 +61,11 @@ function Header() {
 
                 <Tooltip
                     title='Toggle theme'
-                    activator={({ toggle, ref, events }) => {
+                    activator={({ ref, events, attrs }) => {
                         return <Button
                             ref={ref}
                             {...events}
+                            {...attrs}
                             icon
                             className='text-lg'
                             onClick={() => {
