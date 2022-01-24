@@ -36,15 +36,16 @@ type Props = {
     onExit?: (el: HTMLElement | null) => void;
     onExited?: (el: HTMLElement | null) => void;
     role?: React.AriaRole | undefined;
-    awayListeners?: string[],
-    backdropBackground?: string
+    awayListeners?: string[];
+    backdropBackground?: string;
+    transformOrigin?: string
 }
 
 function Overlay(props: Props) {
 
     const {
         open, onToggle, duration, backdropOpacity, style, role,
-        awayListeners = ['click'], backdropBackground,
+        awayListeners = ['click'], backdropBackground, transformOrigin,
         className, children, overlayAttrs, renderBackdrop, lockBodyScroll
     } = props;
 
@@ -223,7 +224,11 @@ function Overlay(props: Props) {
                             className
                         ])
                     }
-                    style={style}
+                    style={{
+                        ...(style || {}),
+                        // @ts-ignore
+                        '--scale-enter-origin': transformOrigin
+                    }}
                     onKeyDown={(e) => {
                         !isTooltip &&
                             trapFocus(e, close, rootRef)
