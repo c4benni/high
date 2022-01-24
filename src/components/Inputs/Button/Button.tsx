@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import AppLoader from '../../Display/Loader';
 import IconWrapper from '../../Icon/Logo/IconWrapper';
-import { ClassName, className } from '../../utils/main';
+import { ClassName, className, getComponentData } from '../../utils/main';
 import { Slot } from '../../utils/types';
 import './main.css'
 
@@ -39,23 +39,16 @@ function Button(props: ButtonProps, ref: ForwardedRef<PropsWithChildren<ButtonPr
 
     const tag = props.tag || 'button'
 
-    const events = useMemo(() => {
-        const output = {} as { [key: string]: any };
-
-        for (const key in props) {
-            if (/^on[A-Z]/.test(key)) {
-                output[key] = props[key]
-            }
-        }
-
-        return output
+    const data = useMemo(() => {
+        return getComponentData(props)
     }, [props])
 
     const isButton = useMemo(() => /button|a/.test(tag), [tag])
 
     return (
         React.createElement(tag, {
-            ...events,
+            ...data.events,
+            ...data.attrs,
             ref,
             title: props.htmlTitle,
             tabIndex:
