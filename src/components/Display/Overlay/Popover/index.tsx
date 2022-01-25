@@ -81,7 +81,7 @@ function Popover(props: Props) {
         ]}
         lockBodyScroll={false}
         transitionDuration={{
-            enter: 200,
+            enter: 483,
             leave: 100
         }}
         onArrowPosition={setArrowPosition}

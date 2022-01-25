@@ -1,11 +1,11 @@
 .Popover{
-    @apply text-sm bg-black text-gray-100 py-1 px-2 relative isolate whitespace-nowrap w-fit dark:border dark:border-gray-800;
+    @apply text-sm bg-white text-gray-900 dark:bg-black dark:text-gray-100 py-1 px-2 relative isolate whitespace-nowrap w-fit border dark:border-gray-800 border-gray-200 shadow-md dark:shadow-none;
     --border-radius: 4px;
     border-radius: var(--border-radius);
 }
 
 .Popover.has-arrow::before{
-    @apply pointer-events-none dark:border-gray-800;
+    @apply pointer-events-none dark:border-gray-800 border-gray-200;
     background-color: inherit;
 }
 
@@ -35,19 +35,19 @@
 }
 
 .Popover.has-arrow.arrow-top::before{
-    @apply dark:border-t dark:border-l;
+    @apply border-t border-l;
 }
 
 .Popover.has-arrow.arrow-right::before{
-    @apply dark:border-r dark:border-t;
+    @apply border-r border-t;
 }
 
 .Popover.has-arrow.arrow-bottom::before{
-    @apply dark:border-r dark:border-b;
+    @apply border-r border-b;
 }
 
 .Popover.has-arrow.arrow-left::before{
-    @apply dark:border-l dark:border-b;
+    @apply border-l border-b;
 }
 
 .Popover.has-arrow.arrow-top::before{
