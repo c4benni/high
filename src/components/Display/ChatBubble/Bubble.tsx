@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { className as classes, ClassName } from '../../utils/main';
-import { ReactionType } from '../../utils/types';
-import Tooltip from '../Overlay/Tooltip';
+import { GetReaction } from '../../utils/types';
 import ChatActions from './ChatActions';
 import Reaction from './Reaction';
 
@@ -43,12 +42,12 @@ function Bubble(props: Props) {
         return 'rounded-3xl'
     }, [message])
 
-    const [reaction, setReaction] = useState<ReactionType | null>(null);
+    const [reaction, setReaction] = useState<GetReaction | null>(null);
 
     return <div
         className={
             classes([
-                'flex',
+                'flex h-full',
                 {
                     'justify-end justify-self-end': sender,
                     'justify-start justify-self-start': receiver
@@ -63,69 +62,53 @@ function Bubble(props: Props) {
         {
                 <Reaction
                     sender={sender}
-                type={reaction || ''}
+                type={reaction?.type || ''}
             />
         }
 
-        <Tooltip
-            arrowSize={10}
-            position='right'
-            activator={({ ref, events }) => {
-                // @ts-ignore
-                return <div
-                    ref={ref}
-                    {...events}
-                    className={
-                        classes([
-                            'Bubble group dark:group-hover:brightness-110 group-hover:brightness-95 transition-transform',
-                            receiver ? [
-                                'bg-true-gray-100 dark:bg-[#202020] justify-self-start order-1',
-                                {
-                                    'rounded-tl-[1px]': !subsequent,
-                                    'translate-x-[-30px]': !reaction
-                                }
-                            ] : [
-                                'bg-primary-600 dark:bg-primary-400 text-white dark:text-[#111] justify-self-end order-2',
-                                {
-                                    'rounded-br-[1px]': !subsequent,
-                                    'rounded-tr-[1px]': subsequent,
-                                    'translate-x-[30px]': !reaction
-                                }
-                            ],
-                            getRadius,
-                            className
-                        ])
-                    }
-                >
-                    {
-                        !subsequent && !sender ?
-                            // make anchor tag!!!
-                            <span
-                                className={
-                                    classes([
-                                        'hover:underline hover:opacity-95 group-hover:opacity-80 font-bold text-sm opacity-60 mb-[2px] transition-opacity cursor-pointer',
-                                        {
-                                            'justify-self-start': receiver,
-                                            // 'justify-self-end': sender,
-                                        }
-                                    ])
-                                }
-                            >
-                                Unique user
-                            </span>
-                            : null
-                    }
-                    {message}
-                </div>
-            }}
+        <div
+            className={
+                classes([
+                    'Bubble group dark:group-hover:brightness-110 group-hover:brightness-95 transition-transform',
+                    receiver ? [
+                        'bg-true-gray-100 dark:bg-[#202020] justify-self-start order-1',
+                        {
+                            'rounded-tl-[1px]': !subsequent,
+                            'translate-x-[-30px]': !reaction
+                        }
+                    ] : [
+                        'bg-primary-600 dark:bg-primary-400 text-white dark:text-[#111] justify-self-end order-2',
+                        {
+                            'rounded-br-[1px]': !subsequent,
+                            'rounded-tr-[1px]': subsequent,
+                            'translate-x-[30px]': !reaction
+                        }
+                    ],
+                    getRadius,
+                    className
+                ])
+            }
         >
-
-            <div
-                className='h-[500px] w-[600px]'
-            >
-                hello
-            </div>
-        </Tooltip>
+            {
+                !subsequent && !sender ?
+                    // make anchor tag!!!
+                    <span
+                        className={
+                            classes([
+                                'hover:underline hover:opacity-95 group-hover:opacity-80 font-bold text-sm opacity-60 mb-[2px] transition-opacity cursor-pointer',
+                                {
+                                    'justify-self-start': receiver,
+                                    // 'justify-self-end': sender,
+                                }
+                            ])
+                        }
+                    >
+                        Unique user
+                    </span>
+                    : null
+            }
+            {message}
+        </div>
 
         <ChatActions
             sender={sender}
