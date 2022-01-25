@@ -136,7 +136,7 @@ export default function repositionY({
 
     if (flip === "flipped") {
       // emit arrow
-      emitArrow("bottom");
+      emitArrow("none");
     } else if (flip === "") {
       // emit arrow
       emitArrow("top");
@@ -148,7 +148,7 @@ export default function repositionY({
 
     if (flip === "flipped") {
       // emit arrow
-      emitArrow("top");
+      emitArrow("none");
     } else if (flip === "") {
       // emit arrow
       emitArrow("bottom");
@@ -168,10 +168,13 @@ export default function repositionY({
     }
 
     if (align === "start") {
-      output = activatorTop;
+      output = Math.min(
+        Math.max(activatorTop, offset),
+        clientHeight - contentHeight - offset
+      );
       arrowSize && emitArrowAdjust(-centeredArrow);
     } else {
-      output = activatorBottom - contentHeight;
+      output = Math.min(Math.max(activatorBottom - contentHeight, clientHeight-contentHeight-offset), offset);
 
       arrowSize && emitArrowAdjust(centeredArrow);
     }

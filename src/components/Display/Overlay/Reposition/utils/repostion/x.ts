@@ -118,7 +118,7 @@ export default function repositionY({
 
     if (flip === "flipped") {
       // emit arrow
-      emitArrowPosition("right");
+      emitArrowPosition("none");
     } else if (flip === "") {
       // emit arrow
       emitArrowPosition("left");
@@ -128,30 +128,26 @@ export default function repositionY({
 
     if (flip === "flipped") {
       // emit arrow
-      emitArrowPosition("left");
+      emitArrowPosition("none");
     } else if (flip === "") {
       // emit arrow
       emitArrowPosition("right");
     }
-  } else if (align) {
-    let centeredArrow = arrowSize
-      ? contentWidth / 2 - activatorWidth / 2 - arrowSize / 2
-      : 0;
 
-    if (centeredArrow) {
-      //   arrow leaving top
-      if (Math.abs(centeredArrow) > contentWidth / 2) {
-        centeredArrow = 0;
-      }
-    }
+    output = Math.min(
+      output + contentWidth + offset,
+      clientWidth - contentWidth - offset
+    );
+  } else if (align) {
 
     if (align === "start") {
-      output = activatorLeft;
-      arrowSize && emitArrowAdjust(-centeredArrow);
+        output = Math.max(
+            Math.min(activatorLeft,
+                clientWidth - contentWidth - offset),
+            offset
+        );
     } else {
-      output = activatorRight - contentWidth;
-
-      arrowSize && emitArrowAdjust(centeredArrow);
+      output = Math.max(Math.min(activatorRight - contentWidth, clientWidth-offset-contentWidth),offset);
     }
   } else {
     //   adjust arrow;
