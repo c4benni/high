@@ -117,7 +117,7 @@ function Tooltip(props: Props) {
         ]}
         lockBodyScroll={false}
         transitionDuration={{
-            enter: 150,
+            enter: 0,
             leave: 100
         }}
         onArrowPosition={setArrowPosition}
