@@ -4,8 +4,9 @@ import { eventKey } from '../../../../utils/eventKey';
 import { DynamicObject, Slot } from '../../../utils/types';
 import Reposition from '../Reposition';
 import './main.css'
-import { OverlayPosition } from '../Reposition/utils/types';
+import { OverlayAlign, OverlayPosition } from '../Reposition/utils/types';
 import { styeArrow } from '../Reposition/utils';
+import useBreakpoint from '../../../../hooks/breakpoint';
 
 type Toggle = (open: boolean) => void
 
@@ -40,7 +41,8 @@ type Props = {
     offset?: number;
     title?: string;
     delay?: number;
-    arrowSize?: number
+    arrowSize?: number;
+    align?: OverlayAlign;
 }
 
 // on open,
@@ -50,10 +52,12 @@ type Props = {
 // onNextFrame, open with default duration
 
 function Tooltip(props: Props) {
+    const [breakpoint] = useBreakpoint();
+
     const {
         children, activator, open,
         onToggle, position = 'bottom', arrowSize,
-        hideArrow, offset = 8, title, delay = 200
+        hideArrow, offset = 8, title, delay = 200, align
     } = props;
 
     const [arrowPosition, setArrowPosition] =
@@ -62,13 +66,14 @@ function Tooltip(props: Props) {
     const [arrowAdjust, setArrowAdjust] = useState<number | null>(0);
 
     const Arrow = useMemo(() => styeArrow(
-        !hideArrow,
+        !hideArrow && !align,
         arrowPosition,
         arrowAdjust,
         arrowSize
-    ), [hideArrow, arrowPosition, arrowAdjust, arrowSize])
+    ), [hideArrow, arrowPosition, arrowAdjust, arrowSize, align])
 
     return <Reposition
+        disabled={breakpoint.isMobile}
         activator={(arg) => {
             const { active, toggle } = arg;
 
@@ -117,7 +122,7 @@ function Tooltip(props: Props) {
         }}
         onArrowPosition={setArrowPosition}
         onArrowAdjust={setArrowAdjust}
-        align='start'
+        align={align}
     >
         {({ active }) => {
             return <div
