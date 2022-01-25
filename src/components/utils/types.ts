@@ -26,6 +26,7 @@ export type ReactionEmoji = "🙈" | "❤" | "😂" | "👍" | "👎" | "❓" | 
 export type GetReaction = {
   title: string;
   emoji: ReactionEmoji;
+  type: ReactionType;
 };
 
 export type ComponentData = {
