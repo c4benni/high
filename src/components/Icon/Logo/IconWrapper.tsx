@@ -1,18 +1,19 @@
 import React, { ReactNode } from 'react'
+import { ClassName, className } from '../../utils/main'
 
 type IconWrapperProps = {
     children?: ReactNode;
-    className?: string;
+    className?: ClassName;
     [key: string]: any;
 }
 
 function IconWrapper(props: IconWrapperProps) {
     return (
         <span
-            className={[
+            className={className([
                 'IconWrapper',
                 props.className || ''
-            ].filter(Boolean).join(' ')}
+            ])}
         >
             {props.children}
         </span>
