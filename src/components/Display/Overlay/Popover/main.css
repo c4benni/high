@@ -1,0 +1,73 @@
+.Popover{
+    @apply text-sm bg-black text-gray-100 py-1 px-2 relative isolate whitespace-nowrap w-fit dark:border dark:border-gray-800;
+    --border-radius: 4px;
+    border-radius: var(--border-radius);
+}
+
+.Popover.has-arrow::before{
+    @apply pointer-events-none dark:border-gray-800;
+    background-color: inherit;
+}
+
+.Popover.has-arrow{
+    @apply before:absolute before:-z-1 before:rotate-45;
+    --size: 7px;
+    --half-size: calc(var(--size) / 2);
+    --arrow-position: calc(50% - var(--half-size) + var(--reposition-arrow, 0px));
+    --arrow-radius: 1.5px;
+}
+
+.Popover.has-arrow::before{
+    height: var(--size);
+    width: var(--size);
+    /* animation: linear 100ms; */
+}
+
+.Popover.has-arrow.arrow-bottom::before,
+.Popover.has-arrow.arrow-top::before{
+    left: var(--arrow-position);
+    /* animation-name: fade-appear, fade-slide-y-appear; */
+}
+
+.Popover.has-arrow.arrow-bottom::before{
+    bottom: calc(0px - var(--half-size));
+    border-bottom-right-radius: var(--arrow-radius);
+}
+
+.Popover.has-arrow.arrow-top::before{
+    @apply dark:border-t dark:border-l;
+}
+
+.Popover.has-arrow.arrow-right::before{
+    @apply dark:border-r dark:border-t;
+}
+
+.Popover.has-arrow.arrow-bottom::before{
+    @apply dark:border-r dark:border-b;
+}
+
+.Popover.has-arrow.arrow-left::before{
+    @apply dark:border-l dark:border-b;
+}
+
+.Popover.has-arrow.arrow-top::before{
+    top: calc(0px - var(--half-size));
+    border-top-left-radius: var(--arrow-radius);
+}
+
+.Popover.has-arrow.arrow-right::before,
+.Popover.has-arrow.arrow-left::before{
+    top: var(--arrow-position);
+    /* animation-name: fade-appear, fade-slide-x-appear; */
+}
+
+.Popover.has-arrow.arrow-right::before{
+    right: calc(0px - var(--half-size));
+    border-top-right-radius: var(--arrow-radius);
+}
+
+.Popover.has-arrow.arrow-left::before{
+    left: calc(0px - var(--half-size));
+    border-bottom-left-radius: var(--arrow-radius);
+    /* --slide-x-appear-from: 100%; */
+}
