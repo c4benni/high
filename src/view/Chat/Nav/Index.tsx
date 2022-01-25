@@ -67,7 +67,7 @@ function Nav() {
                                         [
                                             'grid-flow-row gap-y-1 text-[0.75rem] h-[56px] px-1 w-full justify-items-center content-end font-normal',
                                             {
-                                                'before:text-primary-700 dark:before:text-primary-500': key === activeIndex
+                                                'before:text-primary-700 dark:before:text-primary-500': key === activeIndex,
                                             },
                                             !breakpoint.isMobile ? [
                                                 'ring-offset-0',
@@ -89,7 +89,12 @@ function Nav() {
                                     }
                                 >
                                     <IconWrapper
-                                        className='text-xl opacity-80'
+                                        className={[
+                                            'text-xl opacity-80',
+                                            {
+                                                'text-xl': link.title === 'Setting'
+                                            }
+                                        ]}
                                     >
                                         {link.icon}
                                     </IconWrapper>
