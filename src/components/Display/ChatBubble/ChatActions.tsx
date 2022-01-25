@@ -111,6 +111,7 @@ function ChatActions(props: Props) {
                                         reactions.map((item) => {
                                             return item.emoji ?
                                                 <Tooltip
+                                                    key={item.title}
                                                     title={item.title}
                                                     activator={({ ref: reactionItemRef, events }) => {
                                                         return <Button
