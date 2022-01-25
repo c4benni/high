@@ -35,7 +35,8 @@ type Props = {
     transitionDuration: TransitionDuration;
     onArrowPosition?: (position: OverlayPosition) => void;
     onArrowAdjust?: (offset: number | null) => void;
-    align?: OverlayAlign
+    align?: OverlayAlign;
+    disabled?: boolean;
 }
 
 // on open,
@@ -53,7 +54,7 @@ function Reposition(props: Props) {
         children, activator, open, awayListeners = [],
         lockBodyScroll, position, onToggle, offset = 8,
         delay, role, renderBackdrop, transitionDuration,
-        onArrowPosition, onArrowAdjust, arrowSize, align
+        onArrowPosition, onArrowAdjust, arrowSize, align, disabled
     } = props;
 
     const [selfOpen, setSelfOpen] = useState(open || false);
@@ -70,7 +71,7 @@ function Reposition(props: Props) {
     }, [hasModel, open, selfOpen])
 
     const getToggle = useCallback(async (val: boolean) => {
-        if (!mounted) return;
+        if (!mounted || disabled) return;
 
         const value = typeof val == 'boolean' ? val : !getOpen;
 
@@ -86,7 +87,7 @@ function Reposition(props: Props) {
         }
 
         return setSelfOpen(value);
-    }, [hasModel, onToggle, getOpen, mounted])
+    }, [hasModel, onToggle, getOpen, mounted, disabled])
 
     const [psuedoOpen, setPsuedoOpen] = useState(getOpen);
 
@@ -156,7 +157,9 @@ function Reposition(props: Props) {
             open={!inset ? (psuedoOpen) : showOverlay}
             onToggle={getToggle}
             renderBackdrop={renderBackdrop}
-            className={'fixed'}
+            className={['fixed', {
+                'invisible': !inset
+            }]}
             style={{
                 top: `${inset?.top}px`,
                 left: `${inset?.left}px`
