@@ -19,6 +19,8 @@ const themeSlice: Slice<ThemeSlice> = createSlice({
   initialState,
   reducers: {
     setTheme: (state, action: PayloadAction<string>) => {
+      const installed = state.is;
+
       if (/light|dark/.test(action.payload)) {
         state.is = action.payload as ThemeOption;
       } else state.is = "dark";
@@ -33,7 +35,7 @@ const themeSlice: Slice<ThemeSlice> = createSlice({
       const replaceWith = isLight ? "light" : "dark";
 
       const html = document.documentElement;
-      html.classList.add(currentTheme);
+      !installed && html.classList.add(currentTheme);
       html.classList.replace(currentTheme, replaceWith);
       // }
     },
